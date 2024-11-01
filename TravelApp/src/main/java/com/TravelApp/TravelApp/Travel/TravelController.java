@@ -18,6 +18,8 @@ public class TravelController {
         this.travelRepository = travelRepository;
     }
 
+
+
     @PostMapping("/checkTravel")
     public ResponseEntity<String> checkTravel(@RequestBody Travel travel) {
         String country = travel.getCountry();

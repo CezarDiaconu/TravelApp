@@ -1,15 +1,34 @@
 // src/components/SignIn.js
 import React, { useState } from 'react';
-import '../Styles/SignIn.css'
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import '../Styles/SignIn.css';
 
 function SignIn() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle Sign In Logic
-    console.log('SignIn:', { username, password });
+    
+    try {
+      const response = await axios.post('http://localhost:8080/checkUser', {
+        username,
+        password
+      });
+      
+      if (response.data == "User exists!") {
+        navigate('/home');  
+      } else {
+        toast.error("User does not exist or incorrect credentials!");
+      }
+
+      console.log('Response data:', response.data);
+    } catch (error) {
+      console.error('Axios error:', error.message);
+    }
   };
 
   return (
@@ -38,6 +57,6 @@ function SignIn() {
       </form>
     </div>
   );
-};
+}
 
 export default SignIn;
