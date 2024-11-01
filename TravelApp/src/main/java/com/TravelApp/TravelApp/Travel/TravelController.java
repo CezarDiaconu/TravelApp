@@ -3,11 +3,14 @@ package com.TravelApp.TravelApp.Travel;
 import com.TravelApp.TravelApp.User.UserRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @RestController
 public class TravelController {
@@ -18,8 +21,18 @@ public class TravelController {
         this.travelRepository = travelRepository;
     }
 
+    @GetMapping("/findByCountry")
+    public List<Travel> findByCountry(String country) {
+        List<Travel> foundTravels = travelRepository.findByCountry(country);
 
+        if (foundTravels.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            return foundTravels;
+        }
+    }
 
+/*
     @PostMapping("/checkTravel")
     public ResponseEntity<String> checkTravel(@RequestBody Travel travel) {
         String country = travel.getCountry();
@@ -35,7 +48,7 @@ public class TravelController {
             // If user doesn't exist, send a not found response to the React app
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Travel not found!");
         }
-    }
+    } */
 
     @PostMapping("/createTravel")
     public ResponseEntity<String> createTravel(@RequestBody Travel travel) {
