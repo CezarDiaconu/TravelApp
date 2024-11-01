@@ -1,26 +1,30 @@
 // src/components/SignIn.js
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/SignIn.css';
+import { Context } from '../App';
 
 function SignIn() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [localUsername, setLocalUsername] = useState('');
+  const [localPassword, setLocalPassword] = useState('');
   const navigate = useNavigate();
+  const { setUsername, setPassword } = useContext(Context);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
       const response = await axios.post('http://localhost:8080/checkUser', {
-        username,
-        password
+        username: localUsername,
+        password: localPassword,
       });
-      
-      if (response.data == "User exists!") {
-        navigate('/home');  
+
+      if (response.data === "User exists!") {
+        setUsername(localUsername);
+        setPassword(localPassword);
+        navigate("/home");
       } else {
         toast.error("User does not exist or incorrect credentials!");
       }
@@ -39,8 +43,8 @@ function SignIn() {
           <label>Username:</label>
           <input
             type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={localUsername}
+            onChange={(e) => setLocalUsername(e.target.value)}
             required
           />
         </div>
@@ -48,8 +52,8 @@ function SignIn() {
           <label>Password:</label>
           <input
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={localPassword}
+            onChange={(e) => setLocalPassword(e.target.value)}
             required
           />
         </div>
