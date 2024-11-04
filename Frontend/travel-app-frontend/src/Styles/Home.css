@@ -1,0 +1,69 @@
+.home-container {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.description {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+.qualities, .social-media {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.quality-card, .social-card {
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.quality-card:hover, .social-card:hover {
+    transform: scale(1.05);
+}
+
+.quality-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.qualities h3, .social-media a {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #333;
+}
+
+.quality-card p, .social-card p {
+    color: #666;
+}
+
+.social-media .social-card {
+    width: 150px;
+    padding: 15px;
+}
+
+.social-card a {
+    color: #0073b1; /* Link color for LinkedIn */
+    text-decoration: none;
+    font-weight: bold;
+    bottom: 10px;
+}
+
+.social-card a:hover {
+    color: #005582;
+    text-decoration: underline;
+}

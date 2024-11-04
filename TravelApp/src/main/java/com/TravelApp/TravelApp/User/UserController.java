@@ -1,5 +1,6 @@
 package com.TravelApp.TravelApp.User;
 
+import com.TravelApp.TravelApp.Functions;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,18 +51,23 @@ public class UserController {
         System.out.println("Received email: " + email);
         System.out.println("Received password: " + password);
 
-        User existingUser = userRepository.findByUsernameAndPassword(username, password);
+        if (Functions.isValidPassword(password) != false) {
+            User existingUser = userRepository.findByUsername(username);
 
 
-        if (existingUser != null) {
-            // If user already exists, respond with a message indicating that
-            return ResponseEntity.ok("User already exists!");
-        } else {
-            // If user doesn't exist, save the new user
-            userRepository.save(user);
+            if (existingUser != null) {
+                // If user already exists, respond with a message indicating that
+                return ResponseEntity.ok("User already exists!");
+            } else {
+                // If user doesn't exist, save the new user
+                userRepository.save(user);
 
-            // Respond with a success message
-            return ResponseEntity.ok("User created successfully!");
+                // Respond with a success message
+                return ResponseEntity.ok("User created successfully!");
+            }
+        }
+        else{
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Password must be safer!");
         }
     }
 

@@ -13,10 +13,11 @@ export const Context = React.createContext();
 
 function App() {
   const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   return (
-    <Context.Provider value={{ username, setUsername, password, setPassword }}>
+    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword }}>
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />

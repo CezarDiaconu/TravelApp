@@ -78,6 +78,11 @@
     background-color: #0056b3;
 }
 
+.sorting {
+    margin: 10px 0;
+    text-align: center;
+}
+
 /* Optional: If you include images */
 .travel-image {
     width: 100%;

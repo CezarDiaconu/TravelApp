@@ -11,6 +11,7 @@ function Travel() {
     const [country, setCountry] = useState('');
     
     const [travels, setTravels] = useState([]);
+    const [sortOrder, setSortOrder] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,6 +35,16 @@ function Travel() {
             console.error('Axios error:', error.message);
           }
         };
+
+        const handleSort = (order) => {
+          setSortOrder(order);
+          const sortedTravels = [...travels].sort((a, b) => {
+              if (order === 'asc') return a.price - b.price;
+              if (order === 'desc') return b.price - a.price;
+              return 0;
+          });
+          setTravels(sortedTravels);
+      };  
     
 
     return (
@@ -43,11 +54,23 @@ function Travel() {
             <h2>Hello {username}</h2>
             <div className="search box">
                 <form onSubmit={handleSubmit}>
-                    <label for="javascript">In which country do you want to travel?</label>
-                    <input type="text" id="country" value={country} onChange={(e) => setCountry(e.target.value)} required></input>
+                    <label>In which country do you want to travel?</label>
+                    <select value={country} onChange={(e) => setCountry(e.target.value)}>
+                    <option value="Germany">Germany</option>
+                    <option value="Poland">Poland</option>
+                </select>
                     <button type="submit">Search</button>
                 </form>
             </div>
+            <div className="sorting">
+                <label>Sort by price:</label>
+                <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
+                    <option value="select">Select</option>
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                </select>
+            </div>
+
             <div className="travel-results">
                 {travels.length > 0 ? (
                     <div className="travel-grid">
