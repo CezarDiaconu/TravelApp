@@ -26,6 +26,7 @@ function Travel() {
             if (response.data != null) {
                 console.log(response.data);
                 setTravels(response.data);
+                
             } else {
               console.log('something is wrong')
             }
@@ -51,44 +52,48 @@ function Travel() {
         <div>
             <Navbar />
             <h1>Travel</h1>
+            <div className="container">
             <h2>Hello {username}</h2>
-            <div className="search box">
-                <form onSubmit={handleSubmit}>
-                    <label>In which country do you want to travel?</label>
-                    <select value={country} onChange={(e) => setCountry(e.target.value)}>
-                    <option value="Germany">Germany</option>
-                    <option value="Poland">Poland</option>
-                </select>
-                    <button type="submit">Search</button>
-                </form>
-            </div>
-            <div className="sorting">
-                <label>Sort by price:</label>
-                <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
-                    <option value="select">Select</option>
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
-                </select>
-            </div>
-
-            <div className="travel-results">
-                {travels.length > 0 ? (
-                    <div className="travel-grid">
-                        {travels.map((travel) => (
-                            <div key={travel.id} className="travel-card">
-                                {/* Uncomment if you have imageUrl */}
-                                {/* <img src={travel.imageUrl} alt={`${travel.city}`} className="travel-image" /> */}
-                                <h3>{travel.country}</h3>
-                                <p><strong>City:</strong> {travel.city}</p>
-                                <p><strong>Hotel:</strong> {travel.hotel}</p>
-                                <p><strong>Date:</strong> {new Date(travel.date).toLocaleDateString()}</p>
-                                <p><strong>Price:</strong> {travel.price}</p>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <p>No travels found for this country.</p>
-                )}
+                <div className="search-box">
+                    <form onSubmit={handleSubmit}>
+                        <label>In which country do you want to travel?</label>
+                        <select value={country} onChange={(e) => setCountry(e.target.value)}>
+                            <option value="select">Select</option>
+                            <option value="Germany">Germany</option>
+                            <option value="Poland">Poland</option>
+                        </select>
+                        <button type="submit">Search</button>
+                    </form>
+                </div>
+                <div className="sorting">
+                    <label>Sort by price:</label>
+                    <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
+                        <option value="select">Select</option>
+                        <option value="asc">Ascending</option>
+                        <option value="desc">Descending</option>
+                    </select>
+                </div>
+                </div>
+                <div className="container2">
+                <div className="travel-results">
+                    {travels.length > 0 ? (
+                        <div className="travel-grid">
+                            {travels.map((travel) => (
+                                <div key={travel.id} className="travel-card">
+                                    {/* Uncomment if you have imageUrl */}
+                                    {/* <img src={travel.imageUrl} alt={`${travel.city}`} className="travel-image" /> */}
+                                    <h3>{travel.country}</h3>
+                                    <p><strong>City:</strong> {travel.city}</p>
+                                    <p><strong>Hotel:</strong> {travel.hotel}</p>
+                                    <p><strong>Date:</strong> {new Date(travel.date).toLocaleDateString()}</p>
+                                    <p><strong>Price:</strong> {travel.price}</p>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <p>No travels found for this country.</p>
+                    )}
+                </div>
             </div>
         </div>
     )

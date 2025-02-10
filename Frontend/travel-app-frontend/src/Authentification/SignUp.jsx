@@ -1,16 +1,26 @@
-// src/components/SignUp.js
 import React, { useState } from 'react';
+import axios from 'axios';
 import '../Styles/SignUp.css'
+import { useNavigate } from 'react-router-dom';
 
 function SignUp(){
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle Sign Up Logic
-    console.log('SignUp:', { username, email, password });
+    try {
+      const response = axios.post('http://localhost:8080/createUser', {
+        username: username,
+        email: email,
+        password: password,
+      });
+    } catch (error) {
+      console.log("error: " + error.message)
+    }
+    navigate("/signin");
   };
 
   return (

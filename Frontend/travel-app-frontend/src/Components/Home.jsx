@@ -19,17 +19,17 @@ function Home() {
 
       <section className="qualities">
         <div className="quality-card">
-          <img src="" alt="Security" className="quality-image" />
+          <img src="/Images/security.png" alt="Security" className="quality-image" />
           <h3>Security</h3>
           <p>Your safety is our priority. We ensure secure transactions and safe travel experiences.</p>
         </div>
         <div className="quality-card">
-          <img src="" alt="Efficiency" className="quality-image" />
+          <img src="/Images/efficiency.png" alt="Efficiency" className="quality-image" />
           <h3>Efficiency</h3>
           <p>Quick booking and excellent customer service for a hassle-free experience.</p>
         </div>
         <div className="quality-card">
-          <img src="" alt="Fair Price" className="quality-image" />
+          <img src="/Images/fairPrice.jpg" alt="Fair Price" className="quality-image" />
           <h3>Fair Price</h3>
           <p>Enjoy amazing trips without breaking the bank. We provide transparent pricing.</p>
         </div>

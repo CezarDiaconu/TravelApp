@@ -10,7 +10,7 @@ function SignIn() {
   const [localUsername, setLocalUsername] = useState('');
   const [localPassword, setLocalPassword] = useState('');
   const navigate = useNavigate();
-  const { setUsername, setPassword } = useContext(Context);
+  const { setUsername, setEmail, setPassword } = useContext(Context);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -24,6 +24,19 @@ function SignIn() {
       if (response.data === "User exists!") {
         setUsername(localUsername);
         setPassword(localPassword);
+
+         sessionStorage.setItem("username", localUsername);
+         sessionStorage.setItem("password", localPassword);
+
+        try {
+          const response2 = await axios.post('http://localhost:8080/sendEmail', {
+            username: localUsername,
+            password: localPassword,
+          });
+          setEmail(response2.data);
+        }catch (error) {
+          console.error('Axios error:', error.message);
+        }
         navigate("/home");
       } else {
         toast.error("User does not exist or incorrect credentials!");

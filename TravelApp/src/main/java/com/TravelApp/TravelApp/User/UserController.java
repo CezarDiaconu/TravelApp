@@ -40,6 +40,20 @@ public class UserController {
         }
     }
 
+    @PostMapping("/sendEmail")
+    public String sendEmail(@RequestBody Map<String, String> userData) {
+        String username = userData.get("username");
+        String password = userData.get("password");
+
+        User existingUser = userRepository.findByUsernameAndPassword(username, password);
+        if (existingUser != null) {
+            return existingUser.getEmail();
+        }
+        else {
+            return null;
+        }
+    }
+
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
 
