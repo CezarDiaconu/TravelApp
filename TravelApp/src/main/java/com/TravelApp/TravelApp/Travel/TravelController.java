@@ -58,6 +58,7 @@ public class TravelController {
         String hotel = travel.getHotel();
         LocalDate date = travel.getDate();
         int price = travel.getPrice();
+        int numberOfRemainingSpots = travel.getNumberOfRemainingSpots();
 
         Travel existingTravel = travelRepository.findByCountryAndCityAndHotelAndDate(country, city, hotel, date);
 

@@ -1,9 +1,7 @@
 package com.TravelApp.TravelApp.Travel;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.TravelApp.TravelApp.User.User;
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 
@@ -19,18 +17,24 @@ public class Travel {
     private String hotel;
     private LocalDate date;
     private int price;
+    private int numberOfRemainingSpots;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Travel() {
         super();
     }
 
-    public Travel(int id, String country, String city, String hotel, LocalDate date, int price) {
+    public Travel(int id, String country, String city, String hotel, LocalDate date, int price, int numberOfRemainingSpots, User user) {
         this.id = id;
         this.country = country;
         this.city = city;
         this.hotel = hotel;
         this.date = date;
         this.price = price;
+        this.numberOfRemainingSpots = numberOfRemainingSpots;
     }
 
     public int getId() {
@@ -79,6 +83,14 @@ public class Travel {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getNumberOfRemainingSpots() {
+        return numberOfRemainingSpots;
+    }
+
+    public void setNumberOfRemainingSpots(int numberOfRemainingSpots) {
+        this.numberOfRemainingSpots = numberOfRemainingSpots;
     }
 
     @Override

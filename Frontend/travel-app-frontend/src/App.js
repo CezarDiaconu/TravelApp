@@ -12,19 +12,20 @@ import Account from './Components/Account';
 export const Context = React.createContext();
 
 function App() {
- // Load stored session data
+
  const [username, setUsername] = useState(sessionStorage.getItem("username") || "");
  const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
  const [password, setPassword] = useState(sessionStorage.getItem("password") || "");
+ const [id, setId] = useState(sessionStorage.getItem("id") || "");
 
- // Update sessionStorage when state changes
  useEffect(() => {
    sessionStorage.setItem("username", username);
    sessionStorage.setItem("email", email);
    sessionStorage.setItem("password", password);
- }, [username, email, password]);
+   sessionStorage.setItem("id", id);
+ }, [username, email, password, id]);
   return (
-    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword }}>
+    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId }}>
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />

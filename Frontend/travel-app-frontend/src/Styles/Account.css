@@ -75,3 +75,21 @@ label {
     margin-bottom: 5px;
     font-weight: bold;
 }
+
+.checkbox-container {
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.checkbox-container label {
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.checkbox-container input {
+    transform: scale(1.2); /* Makes the checkbox larger */
+}

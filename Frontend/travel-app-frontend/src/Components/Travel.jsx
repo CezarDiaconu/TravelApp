@@ -47,6 +47,22 @@ function Travel() {
           setTravels(sortedTravels);
       };  
     
+      const handleBook = async (travelId) => {
+        try {
+            const id = sessionStorage.getItem("id"); // Retrieve user ID (make sure you store it during login)
+            console.log("travelId : " + travelId + " userId : " + id);
+            if (!id) {
+                alert("User not logged in!");
+                return;
+            }
+    
+            const response = await axios.post(`http://localhost:8080/addTravel/${id}/${travelId}`);
+            console.log(response.data); 
+        } catch (error) {
+            console.error("Error booking travel:", error);
+            alert("Failed to book travel.");
+        }
+    };
 
     return (
         <div>
@@ -87,6 +103,8 @@ function Travel() {
                                     <p><strong>Hotel:</strong> {travel.hotel}</p>
                                     <p><strong>Date:</strong> {new Date(travel.date).toLocaleDateString()}</p>
                                     <p><strong>Price:</strong> {travel.price}</p>
+                                    <p><strong>Remaining spots:</strong> {travel.numberOfRemainingSpots}</p>
+                                    <button className="book-button" onClick={() => handleBook(travel.id)}>Book Now</button>
                                 </div>
                             ))}
                         </div>

@@ -1,9 +1,7 @@
 package com.TravelApp.TravelApp.User;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import com.TravelApp.TravelApp.Travel.Travel;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -16,6 +14,9 @@ public class User {
     private String username;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Travel> travels;
 
     public User() {
         super();
@@ -58,6 +59,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<Travel> getTravels() {
+        return travels;
+    }
+
+    public void setTravels(List<Travel> travels) {
+        this.travels = travels;
     }
 
     @Override

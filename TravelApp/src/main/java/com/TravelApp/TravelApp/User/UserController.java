@@ -1,24 +1,36 @@
 package com.TravelApp.TravelApp.User;
 
 import com.TravelApp.TravelApp.Functions;
+import com.TravelApp.TravelApp.Travel.Travel;
+import com.TravelApp.TravelApp.Travel.TravelRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 @RestController
 public class UserController {
 
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private TravelRepository travelRepository;
+
+    public UserController() {
+    }
 
     public UserController(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-
+    public UserController(TravelRepository travelRepository) {
+        this.travelRepository = travelRepository;
+    }
 
     @PostMapping("/checkUser")
     public ResponseEntity<String> checkUser(@RequestBody Map<String, String> userData) {
@@ -53,6 +65,22 @@ public class UserController {
             return null;
         }
     }
+
+    @PostMapping("/sendId")
+    public int sendId(@RequestBody Map<String, String> userData) {
+        String username = userData.get("username");
+        String password = userData.get("password");
+
+        User existingUser = userRepository.findByUsernameAndPassword(username, password);
+        if (existingUser != null) {
+            return existingUser.getId();
+        }
+        else {
+            return -1;
+        }
+    }
+
+
 
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
@@ -129,5 +157,28 @@ public class UserController {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to delete user");
         }
+    }
+
+    @PostMapping("/addTravel/{userId}/{travelId}")
+    public ResponseEntity<String> addTravel(@PathVariable int userId, @PathVariable int travelId) {
+
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        Travel travel = travelRepository.findById(travelId);
+        if (travel == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Travel not found");
+        }
+
+        if (user.getTravels() == null) {
+            user.setTravels(new ArrayList<>());
+        }
+
+        user.getTravels().add(travel);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Travel added successfully to user!");
     }
 }
