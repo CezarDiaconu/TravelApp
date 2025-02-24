@@ -34,20 +34,18 @@ public class UserController {
 
     @PostMapping("/checkUser")
     public ResponseEntity<String> checkUser(@RequestBody Map<String, String> userData) {
+
         String username = userData.get("username");
         String password = userData.get("password");
 
         System.out.println("Received username: " + username);
         System.out.println("Received password: " + password);
 
-        // Check if a user with the same username and password already exists
         User existingUser = userRepository.findByUsernameAndPassword(username, password);
 
         if (existingUser != null) {
-            // If user exists, send a success response to the React app
             return ResponseEntity.ok("User exists!");
         } else {
-            // If user doesn't exist, send a not found response to the React app
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
         }
     }
@@ -79,8 +77,6 @@ public class UserController {
             return -1;
         }
     }
-
-
 
     @PostMapping("/createUser")
     public ResponseEntity<String> createUser(@RequestBody User user) {
@@ -115,11 +111,11 @@ public class UserController {
 
     @PatchMapping("/updateUser")
     public ResponseEntity<User> updateUser(@RequestBody Map<String, String> updateData){
+
         String userUsername = updateData.get("username");
         String userPassword = updateData.get("password");
         String whatToUpdate = updateData.get("whatToUpdate");
         String infoToUpdate = updateData.get("infoToUpdate");
-
 
         User user = userRepository.findByUsernameAndPassword(userUsername, userPassword);
 

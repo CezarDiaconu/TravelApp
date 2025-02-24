@@ -4,6 +4,7 @@ import com.TravelApp.TravelApp.User.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity (name = "TravelDB")
 public class Travel {
@@ -19,10 +20,8 @@ public class Travel {
     private int price;
     private int numberOfRemainingSpots;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
+    @ManyToMany(mappedBy = "travels")
+    private List<User> users;
     public Travel() {
         super();
     }

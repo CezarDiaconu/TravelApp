@@ -15,7 +15,11 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany
+    @JoinTable(
+            name = "userdb_travel",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "travel_id"))
     private List<Travel> travels;
 
     public User() {

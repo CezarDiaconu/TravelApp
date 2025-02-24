@@ -54,10 +54,13 @@ function Travel() {
             if (!id) {
                 alert("User not logged in!");
                 return;
-            }
-    
+            }  
             const response = await axios.post(`http://localhost:8080/addTravel/${id}/${travelId}`);
             console.log(response.data); 
+
+            const response1 = await axios.post(`http://localhost:8080/bookTravel/${travelId}`);
+            console.log(response1.data);
+            
         } catch (error) {
             console.error("Error booking travel:", error);
             alert("Failed to book travel.");

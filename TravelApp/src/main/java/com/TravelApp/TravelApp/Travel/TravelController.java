@@ -1,20 +1,20 @@
 package com.TravelApp.TravelApp.Travel;
 
 import com.TravelApp.TravelApp.User.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class TravelController {
 
+    @Autowired
     private TravelRepository travelRepository;
 
     public TravelController(TravelRepository travelRepository, UserRepository userRepository) {
@@ -68,5 +68,26 @@ public class TravelController {
             travelRepository.save(travel);
             return ResponseEntity.ok("Travel created!");
         }
+    }
+
+    @PostMapping("/bookTravel/{travelId}")
+    public ResponseEntity<String> bookTravel(@PathVariable Integer travelId) {
+
+        Optional<Travel> existingTravelOptional = travelRepository.findById(travelId);
+
+        if (existingTravelOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Travel not found!");
+        }
+
+        Travel existingTravel = existingTravelOptional.get();
+
+        if (existingTravel.getNumberOfRemainingSpots() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No remaining spots available.");
+        }
+
+        existingTravel.setNumberOfRemainingSpots(existingTravel.getNumberOfRemainingSpots() - 1);
+        travelRepository.save(existingTravel);
+
+        return ResponseEntity.ok("Travel booked!");
     }
 }
