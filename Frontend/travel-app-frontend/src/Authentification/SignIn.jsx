@@ -61,28 +61,30 @@ function SignIn() {
 
   return (
     <div>
-      <h2>Sign In</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={localUsername}
-            onChange={(e) => setLocalUsername(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={localPassword}
-            onChange={(e) => setLocalPassword(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Sign In</button>
-      </form>
+      <div className='signin-container'>
+          <h2>Sign In</h2>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>Username:</label>
+              <input
+                type="text"
+                value={localUsername}
+                onChange={(e) => setLocalUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label>Password:</label>
+              <input
+                type="password"
+                value={localPassword}
+                onChange={(e) => setLocalPassword(e.target.value)}
+                required
+              />
+            </div>
+            <button type="submit">Sign In</button>
+          </form>
+      </div>
     </div>
   );
 }

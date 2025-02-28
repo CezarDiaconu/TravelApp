@@ -4,7 +4,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 50vh; /* Adjust this value to reduce vertical spacing */
+    min-height: 20vh; /* Adjust this value to reduce vertical spacing */
     text-align: center;
     margin-bottom: 20px; /* Adds spacing between container and next section */
 }
@@ -120,3 +120,7 @@
     text-align: center;
 }
 
+h2{
+    text-align: center;
+    color: #333;
+}

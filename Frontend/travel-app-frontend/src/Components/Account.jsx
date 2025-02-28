@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Navbar from "./Navbar";
 import axios from "axios";
 import { Context } from '../App';
@@ -11,12 +11,47 @@ function Account() {
     const [showAccountInfo, setShowAccountInfo] = useState(false);
     const [showEditOptions, setShowEditOptions] = useState(false);
 
+    //show travels stuff
+    const [travels, setTravels] = useState([]);
+    const id = sessionStorage.getItem("id");
+
+    useEffect(() => {
+        fetchUserTravels();
+    }, []); 
+
+    const fetchUserTravels = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/user/${id}/travels`);
+            setTravels(response.data); 
+        } catch (error) {
+            console.error("Error fetching travels:", error);
+        }
+    };
+
     const handleChangeSelection = (event) => {
         setWhatToUpdate(event.target.value);
     };
     
     const handleInputChange = (event) => {
         setInfoToUpdate(event.target.value);
+    };
+
+    const handleDeleteTravel = async (travelId) => {
+        try {
+            const userId = sessionStorage.getItem("id"); 
+            if (!userId) {
+                console.error("No user ID found in sessionStorage");
+                return;
+            }
+    
+            await axios.delete(`http://localhost:8080/user/${userId}/travels/${travelId}`);
+    
+            setTravels(travels.filter((travel) => travel.id !== travelId));
+    
+            console.log("Travel removed successfully!");
+        } catch (error) {
+            console.error("Error removing travel:", error);
+        }
     };
 
     const handleSubmit = () => {
@@ -47,6 +82,27 @@ function Account() {
         <div>
             <Navbar />
             <h1>Account</h1>
+            <h2>My Travels</h2>
+            {/* Display User's Travels */}
+                {travels.length > 0 ? (
+                    <div className="travel-container">
+                        {travels.map((travel) => (
+                            <div key={travel.id} className="travel-card">
+                                <h3>{travel.country}</h3>
+                                <h3>{travel.city}</h3>
+                                <h3>{travel.hotel}</h3>
+                                <p><strong>Date:</strong> {travel.date}</p>
+                                <button 
+                                className="delete-button" 
+                                onClick={() => handleDeleteTravel(travel.id)} >
+                                Delete Travel
+                            </button>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                        <p className="no-travels">No travels booked yet.</p>
+                )}    
 
             {/* Checkbox to Show Account Info */}
             <div className="checkbox-container">
@@ -78,6 +134,8 @@ function Account() {
                             <span>{password}</span>
                         </div>
                     </div>
+
+                
 
                     {/* Checkbox to Show Edit Account Options */}
                     <div className="checkbox-container">

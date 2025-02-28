@@ -90,4 +90,5 @@ public class TravelController {
 
         return ResponseEntity.ok("Travel booked!");
     }
+
 }

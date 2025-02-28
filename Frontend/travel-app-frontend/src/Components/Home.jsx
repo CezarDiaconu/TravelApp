@@ -17,6 +17,10 @@ function Home() {
         <p>Welcome to our Travel App! Here, we provide personalized travel experiences with a focus on security, efficiency, and fair pricing. Explore the world with us and find your next adventure!</p>
       </section>
 
+      <div className='popular-destinations-card'>
+          
+      </div>
+
       <section className="qualities">
         <div className="quality-card">
           <img src="/Images/security.png" alt="Security" className="quality-image" />
@@ -35,17 +39,19 @@ function Home() {
         </div>
       </section>
 
-      <section className="social-media">
-        <div className="social-card">
-          <a href="https://www.linkedin.com/in/cezar-diaconu-b3582b225/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-        <div className="social-card">
-          <a href="https://github.com/CezarDiaconu/TravelApp" target="_blank" rel="noopener noreferrer">GitHub</a>
-        </div>
-        <div className="social-card">
-          <a href="https://www.instagram.com/cezar_diaconu/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-      </section>
+      <div className='down-container'>
+        <section className="social-media">
+          <div className="social-card">
+            <a href="https://www.linkedin.com/in/cezar-diaconu-b3582b225/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+          <div className="social-card">
+            <a href="https://github.com/CezarDiaconu/TravelApp" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+          <div className="social-card">
+            <a href="https://www.instagram.com/cezar_diaconu/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }

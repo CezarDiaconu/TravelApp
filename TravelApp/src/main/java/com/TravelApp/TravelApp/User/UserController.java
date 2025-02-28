@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -172,9 +173,53 @@ public class UserController {
             user.setTravels(new ArrayList<>());
         }
 
+        if (user.getTravels().contains(travel)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Travel already added to user's list");
+        }
+
         user.getTravels().add(travel);
         userRepository.save(user);
 
         return ResponseEntity.ok("Travel added successfully to user!");
     }
+
+    @GetMapping("/user/{userId}/travels")
+    public ResponseEntity<?> getUserTravels(@PathVariable int userId) {
+        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId));
+
+        if (userOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+        }
+
+        User user = userOptional.get();
+        return ResponseEntity.ok(user.getTravels());
+    }
+
+    @DeleteMapping("/user/{userId}/travels/{travelId}")
+    public ResponseEntity<String> removeTravelFromUser(
+            @PathVariable Integer userId,
+            @PathVariable Integer travelId) {
+
+        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<Travel> travelOptional = travelRepository.findById(travelId);
+
+        if (userOptional.isEmpty() || travelOptional.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or Travel not found!");
+        }
+
+        User user = userOptional.get();
+        Travel travel = travelOptional.get();
+
+        if (!user.getTravels().contains(travel)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Travel not found in user's list!");
+        }
+
+        user.getTravels().remove(travel);
+        userRepository.save(user);
+        travel.setNumberOfRemainingSpots(travel.getNumberOfRemainingSpots() + 1);
+        travelRepository.save(travel);
+
+        return ResponseEntity.ok("Travel removed successfully!");
+    }
+
 }

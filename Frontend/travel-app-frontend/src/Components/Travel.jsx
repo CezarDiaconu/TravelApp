@@ -13,28 +13,30 @@ function Travel() {
     const [travels, setTravels] = useState([]);
     const [sortOrder, setSortOrder] = useState('');
 
+    const fetchTravels = async () => {
+        if (country) {
+            try {
+                const response = await axios.get('http://localhost:8080/findByCountry', {
+                  params: { country }
+                });
+
+                if (response.data) {
+                    setTravels(response.data);
+                } else {
+                    console.log('Something went wrong while fetching data');
+                }
+
+            } catch (error) {
+                console.error('Axios error during re-fetch:', error.message);
+            }
+        }
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        try {
-            const response = await axios.get('http://localhost:8080/findByCountry', {
-              params: {
-                country: country
-              }
-            });
-      
-            if (response.data != null) {
-                console.log(response.data);
-                setTravels(response.data);
-                
-            } else {
-              console.log('something is wrong')
-            }
-      
-            console.log('Response data:', response.data);
-          } catch (error) {
-            console.error('Axios error:', error.message);
-          }
+        fetchTravels();
+
         };
 
         const handleSort = (order) => {
@@ -49,7 +51,7 @@ function Travel() {
     
       const handleBook = async (travelId) => {
         try {
-            const id = sessionStorage.getItem("id"); // Retrieve user ID (make sure you store it during login)
+            const id = sessionStorage.getItem("id"); 
             console.log("travelId : " + travelId + " userId : " + id);
             if (!id) {
                 alert("User not logged in!");
@@ -60,7 +62,9 @@ function Travel() {
 
             const response1 = await axios.post(`http://localhost:8080/bookTravel/${travelId}`);
             console.log(response1.data);
-            
+
+            fetchTravels();
+
         } catch (error) {
             console.error("Error booking travel:", error);
             alert("Failed to book travel.");
@@ -112,7 +116,7 @@ function Travel() {
                             ))}
                         </div>
                     ) : (
-                        <p>No travels found for this country.</p>
+                        <h2>Please select a country</h2>
                     )}
                 </div>
             </div>

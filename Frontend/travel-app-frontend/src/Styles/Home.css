@@ -51,6 +51,7 @@
     color: #666;
 }
 
+
 .social-media .social-card {
     width: 150px;
     padding: 15px;
@@ -66,4 +67,15 @@
 .social-card a:hover {
     color: #005582;
     text-decoration: underline;
+}
+
+.down-container {
+    position: fixed;  /* Stays fixed at the bottom */
+    bottom: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures full-width for better centering */
 }
