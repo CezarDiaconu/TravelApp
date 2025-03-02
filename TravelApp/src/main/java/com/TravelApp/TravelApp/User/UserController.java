@@ -1,6 +1,7 @@
 package com.TravelApp.TravelApp.User;
 
 import com.TravelApp.TravelApp.Functions;
+import com.TravelApp.TravelApp.JwtUtil;
 import com.TravelApp.TravelApp.Travel.Travel;
 import com.TravelApp.TravelApp.Travel.TravelRepository;
 import jakarta.transaction.Transactional;
@@ -50,6 +51,13 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
         }
     }
+
+    @PostMapping("/getToken")
+    public ResponseEntity<String> getToken(String username) {
+        String token = JwtUtil.generateToken(username);
+        return ResponseEntity.ok(token);
+    }
+
 
     @PostMapping("/sendEmail")
     public String sendEmail(@RequestBody Map<String, String> userData) {

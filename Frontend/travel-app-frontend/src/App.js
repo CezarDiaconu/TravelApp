@@ -1,4 +1,3 @@
-// src/App.js
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './Styles/App.css';
@@ -17,15 +16,18 @@ function App() {
  const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
  const [password, setPassword] = useState(sessionStorage.getItem("password") || "");
  const [id, setId] = useState(sessionStorage.getItem("id") || "");
+ const [token, setToken] = useState(sessionStorage.getItem("token") || ""); // 🔹 Added token
 
  useEffect(() => {
    sessionStorage.setItem("username", username);
    sessionStorage.setItem("email", email);
    sessionStorage.setItem("password", password);
    sessionStorage.setItem("id", id);
- }, [username, email, password, id]);
-  return (
-    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId }}>
+   sessionStorage.setItem("token", token); // 🔹 Save token
+ }, [username, email, password, id, token]);
+
+ return (
+    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId, token, setToken }}>
       <BrowserRouter>
         <Routes>
           <Route path="/home" element={<Home />} />
