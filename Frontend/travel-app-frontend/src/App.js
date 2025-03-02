@@ -7,34 +7,45 @@ import SignUp from './Authentification/SignUp';
 import Error from './Components/Error';
 import Travel from './Components/Travel';
 import Account from './Components/Account';
+import { Navigate } from 'react-router-dom';
 
 export const Context = React.createContext();
 
+// ProtectedRoute component to handle access control
+const ProtectedRoute = ({ children, token }) => {
+  if (!token) {
+    return <Navigate to="/signin" />; // Redirect to sign-in page if no token
+  }
+  return children; // Allow access to the route if a valid token exists
+};
+
 function App() {
+  const [username, setUsername] = useState(sessionStorage.getItem("username") || "");
+  const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
+  const [password, setPassword] = useState(sessionStorage.getItem("password") || "");
+  const [id, setId] = useState(sessionStorage.getItem("id") || "");
+  const [token, setToken] = useState(sessionStorage.getItem("token") || "");
 
- const [username, setUsername] = useState(sessionStorage.getItem("username") || "");
- const [email, setEmail] = useState(sessionStorage.getItem("email") || "");
- const [password, setPassword] = useState(sessionStorage.getItem("password") || "");
- const [id, setId] = useState(sessionStorage.getItem("id") || "");
- const [token, setToken] = useState(sessionStorage.getItem("token") || ""); // 🔹 Added token
+  useEffect(() => {
+    sessionStorage.setItem("username", username);
+    sessionStorage.setItem("email", email);
+    sessionStorage.setItem("password", password);
+    sessionStorage.setItem("id", id);
+    sessionStorage.setItem("token", token);
+  }, [username, email, password, id, token]);
 
- useEffect(() => {
-   sessionStorage.setItem("username", username);
-   sessionStorage.setItem("email", email);
-   sessionStorage.setItem("password", password);
-   sessionStorage.setItem("id", id);
-   sessionStorage.setItem("token", token); // 🔹 Save token
- }, [username, email, password, id, token]);
-
- return (
+  return (
     <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId, token, setToken }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/home" element={<ProtectedRoute token={token}><Home /></ProtectedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          <Route path="/travel" element={<Travel />} />
-          <Route path="/account" element={<Account />} />
+          
+          {/* Protect the Travel route */}
+          <Route path="/travel" element={<ProtectedRoute token={token}><Travel /></ProtectedRoute>} />
+          
+          <Route path="/account" element={<ProtectedRoute token={token}><Account /></ProtectedRoute>} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>
