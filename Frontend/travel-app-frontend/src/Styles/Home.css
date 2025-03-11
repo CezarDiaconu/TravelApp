@@ -10,6 +10,43 @@
     color: #555;
 }
 
+/* Popular Destinations */
+
+.popular-destinations-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Up to 2 per row */
+    gap: 20px; /* Adds spacing between items */
+    justify-content: center;
+    padding: 20px;
+}
+
+.popular-destinations-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.popular-destinations-card img:hover, p:hover, h3:hover {
+    transform: scale(1.05);
+    color: #005582;
+    text-decoration: underline;
+}
+
+
+
+.city-image {
+    width: 100%;
+    height: 200px; /* Adjust height as needed */
+    object-fit: cover; /* Scales the image, cropping if necessary */
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+/* Popular Destinations */
+
+/* Qualities */
+
 .qualities, .social-media {
     display: flex;
     justify-content: center;
@@ -51,6 +88,20 @@
     color: #666;
 }
 
+/* Qualities */
+
+/* Social Media */
+
+.down-container {
+    position: fixed;  /* Stays fixed at the bottom */
+    bottom: 20px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures full-width for better centering */
+}
 
 .social-media .social-card {
     width: 150px;
@@ -69,13 +120,4 @@
     text-decoration: underline;
 }
 
-.down-container {
-    position: fixed;  /* Stays fixed at the bottom */
-    bottom: 20px; /* Adjust as needed */
-    left: 50%;
-    transform: translateX(-50%); /* Centers the div */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%; /* Ensures full-width for better centering */
-}
+/* Social Media */

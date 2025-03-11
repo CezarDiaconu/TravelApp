@@ -17,9 +17,57 @@ function Home() {
         <p>Welcome to our Travel App! Here, we provide personalized travel experiences with a focus on security, efficiency, and fair pricing. Explore the world with us and find your next adventure!</p>
       </section>
 
-      <div className='popular-destinations-card'>
-          
+      <h2>Popular Travel Destinations</h2>
+
+      <div className="popular-destinations-container">
+        <div className='popular-destinations-card'>
+          <img src="/Images/CologneCathedral.jpg" alt="Cologne" className="city-image" />
+            <h3>Cologne</h3>
+            <p>A historic German city famous for its stunning Cologne Cathedral, vibrant arts scene, and the annual Carnival celebration.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Paris.jpg" alt="Paris" className="city-image" />
+            <h3>Paris</h3>
+            <p>The "City of Light," known for its iconic Eiffel Tower, world-class museums like the Louvre, and charming cafés along the Seine.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/London.jpg" alt="London" className="city-image" />
+            <h3>London</h3>
+            <p>A diverse metropolis rich in history, featuring landmarks like Big Ben, Buckingham Palace, and the River Thames.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Rome.jpg" alt="Rome" className="city-image" />
+            <h3>Rome</h3>
+            <p>The Eternal City, home to ancient wonders like the Colosseum, the Vatican, and breathtaking Renaissance architecture.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Berlin.jpg" alt="Berlin" className="city-image" />
+            <h3>Berlin</h3>
+            <p>A vibrant mix of history and modern creativity—think edgy street art, buzzing nightlife, and iconic landmarks that tell a story of transformation.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Warsaw.jpg" alt="Warsaw" className="city-image" />
+            <h3>Warsaw</h3>
+            <p>A resilient city that blends a reconstructed historic charm with a modern, forward-thinking spirit. Explore its chic cafes, museums, and dynamic urban vibes.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Barcelona.jpg" alt="Barcelona" className="city-image" />
+            <h3>Barcelona</h3>
+            <p>Bursting with Mediterranean energy, Barcelona dazzles with Gaudí’s whimsical architecture, bustling markets, tasty tapas, and a lively beach scene.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Vienna.jpg" alt="Vienna" className="city-image" />
+            <h3>Vienna</h3>
+            <p>A charming blend of imperial elegance and contemporary cool, where classical music, stunning palaces, and cozy coffee houses make every day feel special.</p>
+        </div>
+        <div className='popular-destinations-card'>
+            <img src="/Images/Prague.jpg" alt="Prague" className="city-image" />
+            <h3>Prague</h3>
+            <p>Often called the “City of a Hundred Spires,” Prague offers a fairytale atmosphere with its winding cobblestone streets, medieval architecture, and vibrant cultural scene.</p>
+        </div>
       </div>
+      
+      <h2>Why should you choose us?</h2>
 
       <section className="qualities">
         <div className="quality-card">

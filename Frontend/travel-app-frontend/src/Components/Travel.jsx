@@ -13,6 +13,39 @@ function Travel() {
     const [travels, setTravels] = useState([]);
     const [sortOrder, setSortOrder] = useState('');
 
+
+    // Filters Code
+    
+    const [cityFilter, setCityFilter] = useState([]);
+
+    const handleCityChange = (event) => {
+        const { value, checked } = event.target;
+        setCityFilter((prev) =>
+            checked ? [...prev, value] : prev.filter((city) => city !== value)
+        );
+    };
+
+    const [priceRange1, setPriceRange1] = useState();
+    const [priceRange2, setPriceRange2] = useState();
+
+    const handlePriceRange = (event) => {
+        const value = event.target;
+
+        if ( value == "Price Range 1"){
+            setPriceRange1(200);
+            setPriceRange2(300);
+        }
+    }
+
+    // Filters Code 
+
+
+
+
+
+
+
+
     const fetchTravels = async () => {
         if (country) {
             try {
@@ -96,8 +129,80 @@ function Travel() {
                         <option value="desc">Descending</option>
                     </select>
                 </div>
-                </div>
-                <div className="container2">
+            </div>
+
+            <div className="filters-container">
+                
+                <label>Select which city would you like to visit</label>
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Berlin"
+                        onChange={handleCityChange}
+                        checked={cityFilter.includes("Berlin")}
+                    />
+                    Berlin
+                </label>
+                <label>
+                    <input
+                        type="checkbox"
+                        value="Munich"
+                        onChange={handleCityChange}
+                        checked={cityFilter.includes("Munich")}
+                    />
+                    Munich
+                </label>
+
+                <label>Select which price range you wish</label>
+                <label>
+                    <input 
+                       type="checkbox"
+                       value="Price Range 1"
+                       onChange={handlePriceRange}
+                       checked="Price Range 1"
+                    />
+                    200-300$
+                </label>
+                <label>
+                    <input 
+                       type="checkbox"
+                       value="Berlin"
+                       onChange={handleCityChange}
+                       checked={cityFilter.includes("Berlin")}
+                    />
+                    300-400$
+                </label>
+                <label>
+                    <input 
+                       type="checkbox"
+                       value="Berlin"
+                       onChange={handleCityChange}
+                       checked={cityFilter.includes("Berlin")}
+                    />
+                    400-500$
+                </label>
+                <label>
+                    <input 
+                       type="checkbox"
+                       value="Berlin"
+                       onChange={handleCityChange}
+                       checked={cityFilter.includes("Berlin")}
+                    />
+                    500-600$
+                </label>
+                <label>
+                    <input 
+                       type="checkbox"
+                       value="Berlin"
+                       onChange={handleCityChange}
+                       checked={cityFilter.includes("Berlin")}
+                    />
+                    600-700$
+                </label>
+            </div>
+
+
+            <div className="container2">
                 <div className="travel-results">
                     {travels.length > 0 ? (
                         <div className="travel-grid">

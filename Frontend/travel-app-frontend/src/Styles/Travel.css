@@ -4,9 +4,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 20vh; /* Adjust this value to reduce vertical spacing */
+    min-height: 20vh; 
     text-align: center;
-    margin-bottom: 20px; /* Adds spacing between container and next section */
+    margin-bottom: 20px; 
 }
 .container2 {
     display: grid;
@@ -123,4 +123,29 @@
 h2{
     text-align: center;
     color: #333;
+}
+
+/* Filters code */
+
+.filters-container {
+    display: flex;
+    flex-direction: column;  /* Stack checkboxes vertically */
+    align-items: flex-start; /* Align content to the left */
+    background-color: #f8f9fa; /* Light grey background */
+    padding: 15px;
+    border-radius: 8px; /* Smooth corners */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    position: fixed; /* Keeps it in place while scrolling */
+    left: 20px; /* Distance from the left */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust to be exactly centered */
+}
+
+.filters-container label {
+    display: flex;
+    align-items: center; /* Keep checkbox and text on the same line */
+    gap: 8px; /* Space between checkbox and text */
+    font-size: 16px;
+    cursor: pointer;
+    padding: 5px 0; /* Space between items */
 }
