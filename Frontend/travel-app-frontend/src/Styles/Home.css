@@ -10,13 +10,54 @@
     color: #555;
 }
 
+body{
+    background-color: #d9d9d9;
+}
+
+h2 {
+    margin-top: 100px;
+}
+
+/* Welcome */
+
+.welcome-container {
+    margin-top: 200px;
+    justify-content: center;
+    display: flex; /* Enables horizontal alignment */
+    align-items: center; /* Centers items vertically */
+    gap: 20px; /* Adds space between image and text */
+    padding: 20px;
+}
+
+.logo {
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 10px;
+}
+
+.welcome-text {
+    display: flex;
+    flex-direction: column; /* Stacks <h3> and <p> vertically */
+    justify-content: center; /* Aligns content vertically */
+    max-width: 500px; /* Prevents text from stretching too much */
+}
+
+.welcome-text h3 {
+    margin-bottom: 10px;
+}
+
+/* Welcome */
+
 /* Popular Destinations */
 
 .popular-destinations-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Up to 2 per row */
-    gap: 20px; /* Adds spacing between items */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px; 
     justify-content: center;
+    max-width: 1000px; /* Limits the grid width */
+    margin: 0 auto; /* Centers the grid */
     padding: 20px;
 }
 
@@ -28,13 +69,15 @@
     text-align: center;
 }
 
-.popular-destinations-card img:hover, p:hover, h3:hover {
+.popular-destinations-card:hover{
     transform: scale(1.05);
-    color: #005582;
-    text-decoration: underline;
 }
 
+.popular-destinations-card img:hover, p:hover {
 
+    color: #666;
+    text-decoration: underline;
+}
 
 .city-image {
     width: 100%;
@@ -43,6 +86,18 @@
     border-radius: 8px;
     margin-bottom: 10px;
   }
+
+@media (max-width: 900px) {
+    .popular-destinations-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .popular-destinations-container {
+        grid-template-columns: 1fr; /* 1 column for small screens */
+    }
+}
 /* Popular Destinations */
 
 /* Qualities */
@@ -94,7 +149,7 @@
 
 .down-container {
     position: fixed;  /* Stays fixed at the bottom */
-    bottom: 20px; /* Adjust as needed */
+    bottom: 0px; /* Adjust as needed */
     left: 50%;
     transform: translateX(-50%); /* Centers the div */
     display: flex;
@@ -121,3 +176,4 @@
 }
 
 /* Social Media */
+

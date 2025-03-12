@@ -1,0 +1,87 @@
+/* buttons container */
+
+.admin-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 100px;
+    background-color: #f4f4f4;
+}
+
+.admin-user-container {
+    display: flex;
+    justify-content:center;
+    margin-right: 40px;
+    padding: 20px;
+    gap: 15px;
+}
+
+.admin-travel-container {
+    display: flex;
+    justify-content:center;
+    margin-right: 40px;
+    padding: 20px;
+    gap: 15px; 
+}
+
+.admin-button {
+    padding: 10px 20px;
+    font-size: 18px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.admin-button:hover {
+    background-color: #0056b3;
+}
+
+/* buttons container */
+
+/* Form Container */
+
+.form-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    margin-top: 200px; /* Full viewport height */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+form div {
+    margin-bottom: 10px;
+}
+
+input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Form Container */

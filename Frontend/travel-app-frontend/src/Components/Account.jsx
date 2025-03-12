@@ -1,4 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
+import { Link } from 'react-router-dom';
 import Navbar from "./Navbar";
 import axios from "axios";
 import { Context } from '../App';
@@ -180,6 +181,14 @@ function Account() {
                     )}
                 </div>
             )}
+
+            <div className="admin-container">
+                <h2>Go to admin page if you are an admin</h2>
+                <div className='signout'>
+                    <Link to='/admin'>Go to Admin Page</Link>
+                </div>
+            </div>
+
         </div>
     );
 }

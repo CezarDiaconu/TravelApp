@@ -8,6 +8,7 @@ import Error from './Components/Error';
 import Travel from './Components/Travel';
 import Account from './Components/Account';
 import { Navigate } from 'react-router-dom';
+import Admin from './Components/Admin';
 
 export const Context = React.createContext();
 
@@ -46,6 +47,7 @@ function App() {
           <Route path="/travel" element={<ProtectedRoute token={token}><Travel /></ProtectedRoute>} />
           
           <Route path="/account" element={<ProtectedRoute token={token}><Account /></ProtectedRoute>} />
+          <Route path="/admin"  element={<ProtectedRoute token={token}><Admin /> </ProtectedRoute>} />
           <Route path="*" element={<Error />} />
         </Routes>
       </BrowserRouter>

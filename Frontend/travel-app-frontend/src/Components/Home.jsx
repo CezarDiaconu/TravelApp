@@ -10,12 +10,14 @@ function Home() {
   return (
     <div className="home-container">
       <Navbar />
-      <h1>Home</h1>
-      <h2>Hello {username}</h2>
       
-      <section className="description">
-        <p>Welcome to our Travel App! Here, we provide personalized travel experiences with a focus on security, efficiency, and fair pricing. Explore the world with us and find your next adventure!</p>
-      </section>
+      <div className="welcome-container">
+        <img src="/Images/TravelApp.png" alt="Travel App" className="logo" />
+        <div className="welcome-text">
+            <h3>Welcome to Travel App, {username}</h3>
+            <p>Discover breathtaking destinations, plan hassle-free trips, and experience travel like never before. With our smart recommendations and seamless booking system, your next adventure is just a few clicks away!</p>
+      </div>
+    </div>
 
       <h2>Popular Travel Destinations</h2>
 
