@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -32,6 +33,11 @@ public class UserController {
 
     public UserController(TravelRepository travelRepository) {
         this.travelRepository = travelRepository;
+    }
+
+    @GetMapping("/getAllUsers")
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @PostMapping("/checkUser")
@@ -155,7 +161,6 @@ public class UserController {
         String username = deleteUser.get("username");
 
         try {
-            // Delete by username using the custom repository method
             userRepository.deleteByUsername(username);
             return ResponseEntity.ok("User deleted");
         } catch (Exception e) {

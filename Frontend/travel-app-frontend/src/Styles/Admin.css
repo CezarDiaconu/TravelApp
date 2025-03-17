@@ -42,11 +42,18 @@
 
 /* Form Container */
 
+.form-and-instructions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 .form-container {
     display: flex;
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    margin-top: 200px; /* Full viewport height */
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 200px; 
 }
 
 form {
@@ -85,3 +92,47 @@ button:hover {
 }
 
 /* Form Container */
+
+/* User List */
+
+.user-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.user-item {
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 10px;
+    width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.user-item .user-id,
+.user-item .user-username,
+.user-item .user-email {
+    margin: 8px 0;
+    font-weight: bold;
+}
+
+.user-travels {
+    margin-top: 10px;
+}
+
+.user-travels ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.user-travels li {
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+/* User List */

@@ -16,4 +16,7 @@ public interface TravelRepository extends JpaRepository<Travel, Integer> {
     @Override
     <S extends Travel> S save(S s);
 
+    @Transactional
+    void deleteByCountryAndCityAndHotelAndDate(String country, String city, String hotel, LocalDate date);
+
 }
