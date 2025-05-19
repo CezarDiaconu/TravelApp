@@ -37,7 +37,7 @@ function Travel() {
         }
     }
 
-    // Filters Code 
+     // Filters Code 
 
     const fetchTravels = async () => {
         if (country) {
@@ -103,26 +103,27 @@ function Travel() {
                 
                 <div className="page-layout">
                     <div className="filters-container">
-                        <label>Select which city would you like to visit</label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value="Berlin"
-                                onChange={handleCityChange}
-                                checked={cityFilter.includes("Berlin")}
-                            />
-                            Berlin
-                        </label>
-                        <label>
-                            <input
-                                type="checkbox"
-                                value="Munich"
-                                onChange={handleCityChange}
-                                checked={cityFilter.includes("Munich")}
-                            />
-                            Munich
-                        </label>
-
+                     {/*
+    <label>Select which city would you like to visit</label>
+    <label>
+      <input
+        type="checkbox"
+        value="Berlin"
+        onChange={handleCityChange}
+        checked={cityFilter.includes("Berlin")}
+      />
+      Berlin
+    </label>
+    <label>
+      <input
+        type="checkbox"
+        value="Munich"
+        onChange={handleCityChange}
+        checked={cityFilter.includes("Munich")}
+      />
+      Munich
+    </label>
+  
                         <label>Select which price range you wish</label>
                         <label>
                             <input 
@@ -169,6 +170,7 @@ function Travel() {
                             />
                             600-700$
                         </label>
+                        */}
                         <div className="sorting">
                             <label>Sort by price:</label>
                             <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>

@@ -39,7 +39,8 @@ function App() {
     <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId, token, setToken }}>
       <BrowserRouter>
         <Routes>
-          <Route path="/home" element={<ProtectedRoute token={token}><Home /></ProtectedRoute>} />
+          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           
