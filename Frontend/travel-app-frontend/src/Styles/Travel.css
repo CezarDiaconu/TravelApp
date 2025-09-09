@@ -21,8 +21,26 @@ h2{
 
 /* Filters code */
 
+.cities {
+  margin: 25px auto;
+  display: flex;
+  flex-wrap: wrap;        /* allow wrapping to multiple lines */
+  gap: 10px 20px;         /* space between checkboxes */
+  margin-bottom: 15px;
+  width: 100%;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);            
+}
+
+.cities label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 15px;
+  white-space: nowrap;    /* keep city name together with checkbox */
+}
+
 .filters-container {
-    margin-top: 50px;
+    margin: 25px auto;
     display: flex;
     flex-direction: row;       /* horizontal */
     align-items: center;

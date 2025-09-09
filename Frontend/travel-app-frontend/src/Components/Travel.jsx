@@ -13,6 +13,7 @@ function Travel() {
     const [travels, setTravels] = useState([]);
     const [sortOrder, setSortOrder] = useState('');
     const [priceRange, setPriceRange] = useState({ min: null, max: null });
+    const [availableCities, setAvailableCities] = useState([]);
 
     // Filters Code
     
@@ -41,6 +42,9 @@ function Travel() {
 
                 if (response.data) {
                     setTravels(response.data);
+
+                    const uniqueCities = [...new Set(response.data.map(t => t.city))];
+                    setAvailableCities(uniqueCities);
                 } else {
                     console.log('Something went wrong while fetching data');
                 }
@@ -112,7 +116,6 @@ function Travel() {
         <div>
             <Navbar />
                 <div className="page-layout">
-                    
                     <div className="container">
                         <h2>Hello {username}</h2>
                             <div className="search-box">
@@ -129,89 +132,81 @@ function Travel() {
                             </div>
                     </div>    
                     
-                    
-                    <div className="filters-container">
-                     
-    <label>Select which city would you like to visit</label>
-    <label>
-      <input
-        type="checkbox"
-        value="Berlin"
-        onChange={handleCityChange}
-        checked={cityFilter.includes("Berlin")}
-      />
-      Berlin
-    </label>
-    <label>
-      <input
-        type="checkbox"
-        value="Munich"
-        onChange={handleCityChange}
-        checked={cityFilter.includes("Munich")}
-      />
-      Munich
-    </label>
-  
-        <label>Select which price range you wish</label>
-            <label>
-            <input 
-                type="checkbox"
-                value="200-400"
-                onChange={handlePriceRange}
-                checked={priceRange.min === 200 && priceRange.max === 400}
-            />
-            200-400$
-            </label>
-
-            <label>
-            <input 
-                type="checkbox"
-                value="400-600"
-                onChange={handlePriceRange}
-                checked={priceRange.min === 400 && priceRange.max === 600}
-            />
-            400-600$
-            </label>
-
-            <label>
-            <input 
-                type="checkbox"
-                value="600-800"
-                onChange={handlePriceRange}
-                checked={priceRange.min === 600 && priceRange.max === 800}
-            />
-            600-800$
-            </label>
-
-            <label>
-            <input 
-                type="checkbox"
-                value="800-1200"
-                onChange={handlePriceRange}
-                checked={priceRange.min === 800 && priceRange.max === 1200}
-            />
-            800-1200$
-            </label>
-
-            <label>
-            <input 
-                type="checkbox"
-                value="1200-+"
-                onChange={handlePriceRange}
-                checked={priceRange.min === 1200 && priceRange.max === null}
-            />
-            1200$+
-            </label>
+                    {travels.length > 0 ? (
+                    <div className="cities">
+                        <label>Select which city would you like to visit</label>
+                        {availableCities.map(city => (
+                        <label key={city}>
+                            <input
+                            type="checkbox"
+                            value={city}
+                            onChange={handleCityChange}
+                            checked={cityFilter.includes(city)}
+                            />
+                            {city}
+                        </label>
+                        ))}
+                    </div> 
+                    ) : (
+                    <h2>Please select a country</h2>
+                    )}
+                    <div className="filters-container">        
+                        <label>Select which price range you wish</label>
+                            <label>
+                            <input 
+                                type="checkbox"
+                                value="200-400"
+                                onChange={handlePriceRange}
+                                checked={priceRange.min === 200 && priceRange.max === 400}
+                            />
+                            200-400$
+                            </label>
+                        <label>
+                        <input 
+                            type="checkbox"
+                            value="400-600"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 400 && priceRange.max === 600}
+                        />
+                        400-600$
+                        </label>
+                        <label>
+                        <input 
+                            type="checkbox"
+                            value="600-800"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 600 && priceRange.max === 800}
+                        />
+                        600-800$
+                        </label>
+                        <label>
+                        <input 
+                            type="checkbox"
+                            value="800-1200"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 800 && priceRange.max === 1200}
+                        />
+                        800-1200$
+                        </label>
+                        <label>
+                        <input 
+                            type="checkbox"
+                            value="1200-+"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 1200 && priceRange.max === null}
+                        />
+                        1200$+
+                        </label>
         
-        <div className="sorting">
-            <label>Sort by price:</label>
-            <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
-                <option value="select">Select</option>
-                <option value="asc">Ascending</option>
-                <option value="desc">Descending</option>
-            </select>
-        </div>
-    </div>
+                        <div className="sorting">
+                            <label>Sort by price:</label>
+                            <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
+                                <option value="select">Select</option>
+                                <option value="asc">Ascending</option>
+                                <option value="desc">Descending</option>
+                            </select>
+                        </div>
+                    </div>
 
     
         <div className="container2">
