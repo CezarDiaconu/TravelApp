@@ -1,0 +1,179 @@
+.home-container {
+    text-align: center;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.description {
+    margin: 20px 0;
+    font-size: 1.2rem;
+    color: #555;
+}
+
+body{
+    background-color: #d9d9d9;
+}
+
+h2 {
+    margin-top: 100px;
+}
+
+/* Welcome */
+
+.welcome-container {
+    margin-top: 200px;
+    justify-content: center;
+    display: flex; /* Enables horizontal alignment */
+    align-items: center; /* Centers items vertically */
+    gap: 20px; /* Adds space between image and text */
+    padding: 20px;
+}
+
+.logo {
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+    border-radius: 10px;
+}
+
+.welcome-text {
+    display: flex;
+    flex-direction: column; /* Stacks <h3> and <p> vertically */
+    justify-content: center; /* Aligns content vertically */
+    max-width: 500px; /* Prevents text from stretching too much */
+}
+
+.welcome-text h3 {
+    margin-bottom: 10px;
+}
+
+/* Welcome */
+
+/* Popular Destinations */
+
+.popular-destinations-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    grid-template-rows: repeat(3, 1fr);
+    gap: 20px; 
+    justify-content: center;
+    max-width: 1000px; /* Limits the grid width */
+    margin: 0 auto; /* Centers the grid */
+    padding: 20px;
+}
+
+.popular-destinations-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.popular-destinations-card:hover{
+    transform: scale(1.05);
+}
+
+.popular-destinations-card img:hover, p:hover {
+
+    color: #666;
+    text-decoration: underline;
+}
+
+.city-image {
+    width: 100%;
+    height: 200px; /* Adjust height as needed */
+    object-fit: cover; /* Scales the image, cropping if necessary */
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+
+@media (max-width: 900px) {
+    .popular-destinations-container {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on medium screens */
+    }
+}
+
+@media (max-width: 600px) {
+    .popular-destinations-container {
+        grid-template-columns: 1fr; /* 1 column for small screens */
+    }
+}
+/* Popular Destinations */
+
+/* Qualities */
+
+.qualities, .social-media {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+
+.quality-card, .social-card {
+    width: 250px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.quality-card:hover, .social-card:hover {
+    transform: scale(1.05);
+}
+
+.quality-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.qualities h3, .social-media a {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #333;
+}
+
+.quality-card p, .social-card p {
+    color: #666;
+}
+
+/* Qualities */
+
+/* Social Media */
+
+.down-container {
+    position: fixed;  /* Stays fixed at the bottom */
+    bottom: 0px; /* Adjust as needed */
+    left: 50%;
+    transform: translateX(-50%); /* Centers the div */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%; /* Ensures full-width for better centering */
+}
+
+.social-media .social-card {
+    width: 150px;
+    padding: 15px;
+}
+
+.social-card a {
+    color: #0073b1; /* Link color for LinkedIn */
+    text-decoration: none;
+    font-weight: bold;
+    bottom: 10px;
+}
+
+.social-card a:hover {
+    color: #005582;
+    text-decoration: underline;
+}
+
+/* Social Media */
+

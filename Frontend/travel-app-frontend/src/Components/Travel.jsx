@@ -12,7 +12,7 @@ function Travel() {
     
     const [travels, setTravels] = useState([]);
     const [sortOrder, setSortOrder] = useState('');
-
+    const [priceRange, setPriceRange] = useState({ min: null, max: null });
 
     // Filters Code
     
@@ -28,14 +28,7 @@ function Travel() {
     const [priceRange1, setPriceRange1] = useState();
     const [priceRange2, setPriceRange2] = useState();
 
-    const handlePriceRange = (event) => {
-        const value = event.target;
-
-        if ( value == "Price Range 1"){
-            setPriceRange1(200);
-            setPriceRange2(300);
-        }
-    }
+    
 
      // Filters Code 
 
@@ -73,7 +66,18 @@ function Travel() {
               return 0;
           });
           setTravels(sortedTravels);
-      };  
+        };
+      
+        const handlePriceRange = (event) => {
+            const { value, checked } = event.target;
+
+            if (checked) { 
+                const [min, max] = value.split("-").map(v => v === "+" ? null : parseInt(v));
+                setPriceRange({ min, max });
+            } else {
+                setPriceRange({ min: null, max: null });
+            }
+        };
     
       const handleBook = async (travelId) => {
         try {
@@ -97,13 +101,37 @@ function Travel() {
         }
     };
 
+    const filteredTravels = travels.filter(t => {
+        if (cityFilter.length > 0 && !cityFilter.includes(t.city)) return false;
+        if (priceRange.min !== null && t.price < priceRange.min) return false;
+        if (priceRange.max !== null && t.price > priceRange.max) return false;
+        return true;
+    });
+
     return (
         <div>
             <Navbar />
-                
                 <div className="page-layout">
+                    
+                    <div className="container">
+                        <h2>Hello {username}</h2>
+                            <div className="search-box">
+                                <form onSubmit={handleSubmit}>
+                                    <label>In which country do you want to travel?</label>
+                                    <select value={country} onChange={(e) => setCountry(e.target.value)}>
+                                        <option value="select">Select</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Poland">Poland</option>
+                                        <option value="France">France</option>
+                                    </select>
+                                    <button type="submit">Search</button>
+                                </form>
+                            </div>
+                    </div>    
+                    
+                    
                     <div className="filters-container">
-                     {/*
+                     
     <label>Select which city would you like to visit</label>
     <label>
       <input
@@ -124,103 +152,92 @@ function Travel() {
       Munich
     </label>
   
-                        <label>Select which price range you wish</label>
-                        <label>
-                            <input 
-                            type="checkbox"
-                            value="Price Range 1"
-                            onChange={handlePriceRange}
-                            checked="Price Range 1"
-                            />
-                            200-300$
-                        </label>
-                        <label>
-                            <input 
-                            type="checkbox"
-                            value="Berlin"
-                            onChange={handleCityChange}
-                            checked={cityFilter.includes("Berlin")}
-                            />
-                            300-400$
-                        </label>
-                        <label>
-                            <input 
-                            type="checkbox"
-                            value="Berlin"
-                            onChange={handleCityChange}
-                            checked={cityFilter.includes("Berlin")}
-                            />
-                            400-500$
-                        </label>
-                        <label>
-                            <input 
-                            type="checkbox"
-                            value="Berlin"
-                            onChange={handleCityChange}
-                            checked={cityFilter.includes("Berlin")}
-                            />
-                            500-600$
-                        </label>
-                        <label>
-                            <input 
-                            type="checkbox"
-                            value="Berlin"
-                            onChange={handleCityChange}
-                            checked={cityFilter.includes("Berlin")}
-                            />
-                            600-700$
-                        </label>
-                        */}
-                        <div className="sorting">
-                            <label>Sort by price:</label>
-                            <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
-                                <option value="select">Select</option>
-                                <option value="asc">Ascending</option>
-                                <option value="desc">Descending</option>
-                            </select>
-                        </div>
-                    </div>
+        <label>Select which price range you wish</label>
+            <label>
+            <input 
+                type="checkbox"
+                value="200-400"
+                onChange={handlePriceRange}
+                checked={priceRange.min === 200 && priceRange.max === 400}
+            />
+            200-400$
+            </label>
 
-                    <div className="container">
-                    <h2>Hello {username}</h2>
-                        <div className="search-box">
-                            <form onSubmit={handleSubmit}>
-                                <label>In which country do you want to travel?</label>
-                                <select value={country} onChange={(e) => setCountry(e.target.value)}>
-                                    <option value="select">Select</option>
-                                    <option value="Germany">Germany</option>
-                                    <option value="Poland">Poland</option>
-                                    <option value="France">France</option>
-                                </select>
-                                <button type="submit">Search</button>
-                            </form>
-                        </div>
-                    </div>
+            <label>
+            <input 
+                type="checkbox"
+                value="400-600"
+                onChange={handlePriceRange}
+                checked={priceRange.min === 400 && priceRange.max === 600}
+            />
+            400-600$
+            </label>
 
-                    <div className="container2">
-                        <div className="travel-results">
-                            {travels.length > 0 ? (
-                                <div className="travel-grid">
-                                    {travels.map((travel) => (
-                                        <div key={travel.id} className="travel-card">
-                                            {/* Uncomment if you have imageUrl */}
-                                            {/* <img src={travel.imageUrl} alt={`${travel.city}`} className="travel-image" /> */}
-                                            <h3>{travel.country}</h3>
-                                            <p><strong>City:</strong> {travel.city}</p>
-                                            <p><strong>Hotel:</strong> {travel.hotel}</p>
-                                            <p><strong>Date:</strong> {new Date(travel.date).toLocaleDateString()}</p>
-                                            <p><strong>Price:</strong> {travel.price}</p>
-                                            <p><strong>Remaining spots:</strong> {travel.numberOfRemainingSpots}</p>
-                                            <button className="book-button" onClick={() => handleBook(travel.id)}>Book Now</button>
-                                        </div>
-                                    ))}
-                                </div>
-                            ) : (
-                                <h2>Please select a country</h2>
-                            )}
-                        </div>
-                    </div>       
-                </div>
+            <label>
+            <input 
+                type="checkbox"
+                value="600-800"
+                onChange={handlePriceRange}
+                checked={priceRange.min === 600 && priceRange.max === 800}
+            />
+            600-800$
+            </label>
+
+            <label>
+            <input 
+                type="checkbox"
+                value="800-1200"
+                onChange={handlePriceRange}
+                checked={priceRange.min === 800 && priceRange.max === 1200}
+            />
+            800-1200$
+            </label>
+
+            <label>
+            <input 
+                type="checkbox"
+                value="1200-+"
+                onChange={handlePriceRange}
+                checked={priceRange.min === 1200 && priceRange.max === null}
+            />
+            1200$+
+            </label>
+        
+        <div className="sorting">
+            <label>Sort by price:</label>
+            <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>
+                <option value="select">Select</option>
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+            </select>
+        </div>
+    </div>
+
+    
+        <div className="container2">
+            <div className="travel-results">
+                {travels.length > 0 ? (
+                    <div className="travel-grid">
+                        {filteredTravels.map((travel) => (
+                            <div key={travel.id} className="travel-card">
+                                {/* Uncomment if you have imageUrl */}
+                                {/* <img src={travel.imageUrl} alt={`${travel.city}`} className="travel-image" /> */}
+                                <h3>{travel.country}</h3>
+                                <p><strong>City:</strong> {travel.city}</p>
+                                <p><strong>Hotel:</strong> {travel.hotel}</p>
+                                <p><strong>Date:</strong> {new Date(travel.date).toLocaleDateString()}</p>
+                                <p><strong>Price:</strong> {travel.price}</p>
+                                <p><strong>Remaining spots:</strong> {travel.numberOfRemainingSpots}</p>
+                                <button className="book-button" onClick={() => handleBook(travel.id)}>Book Now</button>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <h2>Please select a country</h2>
+                )}
+            </div>
+        </div>       
+    </div>
         </div>
     )
 }

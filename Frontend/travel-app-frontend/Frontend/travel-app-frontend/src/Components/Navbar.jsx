@@ -18,7 +18,7 @@ function Navbar(props) {
                 <Link to="/account">Account</Link>
             </div>
             <div className='signout'>
-                <Link to='/signin'>Sign In</Link>
+                <Link to='/signin'>Sign Out</Link>
             </div>
         </div>
 )
