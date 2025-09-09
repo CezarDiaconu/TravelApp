@@ -3,6 +3,10 @@ import axios from "axios";
 import Navbar from "./Navbar";
 import { Context } from '../App';
 import '../Styles/Travel.css';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+
+
 
 function Travel() {
     
@@ -15,6 +19,9 @@ function Travel() {
     const [priceRange, setPriceRange] = useState({ min: null, max: null });
     const [availableCities, setAvailableCities] = useState([]);
 
+    const [calendarValue, calendarValueOnChange] = useState(new Date());
+
+
     // Filters Code
     
     const [cityFilter, setCityFilter] = useState([]);
@@ -25,11 +32,6 @@ function Travel() {
             checked ? [...prev, value] : prev.filter((city) => city !== value)
         );
     };
-
-    const [priceRange1, setPriceRange1] = useState();
-    const [priceRange2, setPriceRange2] = useState();
-
-    
 
      // Filters Code 
 
@@ -132,6 +134,8 @@ function Travel() {
                             </div>
                     </div>    
                     
+                    <Calendar onChange={calendarValueOnChange} value={calendarValue} />
+
                     {travels.length > 0 ? (
                     <div className="cities">
                         <label>Select which city would you like to visit</label>
