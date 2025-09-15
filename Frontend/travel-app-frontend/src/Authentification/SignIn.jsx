@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import '../Styles/SignIn.css';
 import { Context } from '../App';
+import { Link } from 'react-router-dom';
 
 function SignIn() {
   const [localUsername, setLocalUsername] = useState('');
@@ -95,6 +96,7 @@ function SignIn() {
               />
             </div>
             <button type="submit">Sign In</button>
+            <Link to="/signup">You don't have an account? Create one by clicking on this text!</Link>
           </form>
       </div>
     </div>
