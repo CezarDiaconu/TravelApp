@@ -1,12 +1,13 @@
 package com.TravelApp.TravelApp.Travel;
 
 import com.TravelApp.TravelApp.User.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity (name = "TravelDB")
+@Entity(name = "TravelDB")
 public class Travel {
 
     @Id
@@ -16,26 +17,30 @@ public class Travel {
     private String country;
     private String city;
     private String hotel;
-    private LocalDate date;
-    private int price;
+    private int pricePerPerson;
     private int numberOfRemainingSpots;
 
     @ManyToMany(mappedBy = "travels")
-    private List<User> users;
+    @JsonIgnore
+    private List<User> users = new ArrayList<>();
+
+    @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TravelDay> travelDays = new ArrayList<>();
+
     public Travel() {
-        super();
+        // default constructor required by JPA
     }
 
-    public Travel(int id, String country, String city, String hotel, LocalDate date, int price, int numberOfRemainingSpots, User user) {
-        this.id = id;
+    public Travel(String country, String city, String hotel,
+                  int pricePerPerson, int numberOfRemainingSpots) {
         this.country = country;
         this.city = city;
         this.hotel = hotel;
-        this.date = date;
-        this.price = price;
+        this.pricePerPerson = pricePerPerson;
         this.numberOfRemainingSpots = numberOfRemainingSpots;
     }
 
+    // Getters and setters
     public int getId() {
         return id;
     }
@@ -68,20 +73,12 @@ public class Travel {
         this.hotel = hotel;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public int getPricePerPerson() {
+        return pricePerPerson;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPricePerPerson(int pricePerPerson) {
+        this.pricePerPerson = pricePerPerson;
     }
 
     public int getNumberOfRemainingSpots() {
@@ -92,6 +89,22 @@ public class Travel {
         this.numberOfRemainingSpots = numberOfRemainingSpots;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<TravelDay> getTravelDays() {
+        return travelDays;
+    }
+
+    public void setTravelDays(List<TravelDay> travelDays) {
+        this.travelDays = travelDays;
+    }
+
     @Override
     public String toString() {
         return "Travel{" +
@@ -99,8 +112,8 @@ public class Travel {
                 ", country='" + country + '\'' +
                 ", city='" + city + '\'' +
                 ", hotel='" + hotel + '\'' +
-                ", date=" + date +
-                ", price=" + price +
+                ", pricePerPerson=" + pricePerPerson +
+                ", numberOfRemainingSpots=" + numberOfRemainingSpots +
                 '}';
     }
 }

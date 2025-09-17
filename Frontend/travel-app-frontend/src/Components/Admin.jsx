@@ -20,8 +20,7 @@ function Admin() {
     const [country, setCountry] = useState("");
     const [city, setCity] = useState("");
     const [hotel, setHotel] = useState("");
-    const [date, setDate] = useState("");
-    const [price, setPrice] = useState(0);
+    const [pricePerPerson, setPricePerPerson] = useState(0);
     const [numberOfRemainingSpots, setNumberOfRemainingSpots] = useState("0");
 
     const [activeForm, setActiveForm] = useState(0);
@@ -100,9 +99,8 @@ function Admin() {
                 country: country,
                 city: city,
                 hotel: hotel,
-                date: date,
                 whatToUpdate: whatToUpdate,  
-                infoToUpdate: infoToUpdate,   
+                infoToUpdate: infoToUpdate.toString()   
             });
 
             if (response6.data === "Travel updated!") {
@@ -121,9 +119,7 @@ function Admin() {
                 country: country,
                 city: city,
                 hotel: hotel,
-                date: date,
-                price: price,
-                numberOfRemainingSpots: numberOfRemainingSpots,
+                pricePerPerson: pricePerPerson
             });
 
             if (response7.data === "Travel created!") {
@@ -140,7 +136,7 @@ function Admin() {
     const deleteTravel = async () => {
         try {
             const response8 = await axios.delete("http://localhost:8080/deleteTravel", {
-                data: { country: country, city: city, hotel: hotel, date: date, }, 
+                data: { country: country, city: city, hotel: hotel }, 
                 headers: {
                     "Content-Type": "application/json"
                 }
@@ -336,8 +332,7 @@ function Admin() {
                         <h4>country</h4>
                         <h4>city</h4>
                         <h4>hotel</h4>
-                        <h4>date</h4>
-                        <h4>price</h4>
+                        <h4>pricePerPerson</h4>
                         <h4>numberOfRemainingSpots</h4>
                     </div>    
                     <div className="form-container">
@@ -366,15 +361,6 @@ function Admin() {
                                 type="text"
                                 value={hotel}
                                 onChange={(e) => setHotel(e.target.value)}
-                                required
-                            />
-                            </div>
-                            <div>
-                            <label>Date:</label>
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={(e) => setDate(e.target.value)}
                                 required
                             />
                             </div>
@@ -437,20 +423,11 @@ function Admin() {
                             />
                             </div>
                             <div>
-                            <label>Date:</label>
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={(e) => setDate(e.target.value)}
-                                required
-                            />
-                            </div>
-                            <div>
-                            <label>Price:</label>
+                            <label>Price per person:</label>
                             <input
                                 type="number"
-                                value={price}
-                                onChange={(e) => setPrice(e.target.value)}
+                                value={pricePerPerson}
+                                onChange={(e) => setPricePerPerson(e.target.value)}
                                 required
                             />
                             </div>
@@ -503,15 +480,6 @@ function Admin() {
                                 required
                             />
                             </div>
-                            <div>
-                            <label>Date:</label>
-                            <input
-                                type="date"
-                                value={date}
-                                onChange={(e) => setDate(e.target.value)}
-                                required
-                            />
-                            </div>
                             <button type="submit">Delete Travel</button>
                         </form>
                     </div>
@@ -526,8 +494,7 @@ function Admin() {
                             <div className="user-username">Country: {travel.country}</div>
                             <div className="user-email">City: {travel.city}</div>
                             <div className="user-email">Hotel: {travel.hotel}</div>
-                            <div className="user-username">Date: {travel.date}</div>
-                            <div className="user-email">Price: {travel.price}</div>
+                            <div className="user-email">PricePerPerson: {travel.price}</div>
                             <div className="user-email">Number of Remaining Spots: {travel.numberOfRemainingSpots}</div>
                         </div>   
                     ))}
