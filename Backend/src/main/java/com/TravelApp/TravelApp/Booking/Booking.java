@@ -22,11 +22,11 @@ public class Booking {
     private int numberOfPersons;
     private double totalPrice;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "travel_id", nullable = false)
     private Travel travel;
 

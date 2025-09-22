@@ -20,15 +20,12 @@ public class Travel {
     private int pricePerPerson;
     private int numberOfRemainingSpots;
 
-    @ManyToMany(mappedBy = "travels")
-    @JsonIgnore
-    private List<User> users = new ArrayList<>();
+
 
     @OneToMany(mappedBy = "travel", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<TravelDay> travelDays = new ArrayList<>();
 
     public Travel() {
-        // default constructor required by JPA
     }
 
     public Travel(String country, String city, String hotel,
@@ -87,14 +84,6 @@ public class Travel {
 
     public void setNumberOfRemainingSpots(int numberOfRemainingSpots) {
         this.numberOfRemainingSpots = numberOfRemainingSpots;
-    }
-
-    public List<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public List<TravelDay> getTravelDays() {

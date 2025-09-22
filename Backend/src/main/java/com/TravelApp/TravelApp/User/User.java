@@ -1,5 +1,6 @@
 package com.TravelApp.TravelApp.User;
 
+import com.TravelApp.TravelApp.Booking.Booking;
 import com.TravelApp.TravelApp.Travel.Travel;
 import jakarta.persistence.*;
 
@@ -17,11 +18,10 @@ public class User {
 
     @ManyToMany
     @JoinTable(
-            name = "userdb_travel",
+            name = "user_booking",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "travel_id"))
-
-    private List<Travel> travels;
+            inverseJoinColumns = @JoinColumn(name = "booking_id"))
+    private List<Booking> bookings;
 
     public User() {
         super();
@@ -66,12 +66,12 @@ public class User {
         this.password = password;
     }
 
-    public List<Travel> getTravels() {
-        return travels;
+    public List<Booking> getBookings() {
+        return bookings;
     }
 
-    public void setTravels(List<Travel> travels) {
-        this.travels = travels;
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 
     @Override

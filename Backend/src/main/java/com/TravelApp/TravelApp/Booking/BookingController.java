@@ -7,14 +7,12 @@ import com.TravelApp.TravelApp.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @RestController
 public class BookingController {
@@ -68,6 +66,36 @@ public class BookingController {
         bookingRepository.save(booking);
 
         return ResponseEntity.ok("Booking created successfully with total price: " + price);
+    }
+
+    @GetMapping("/user/{userId}/bookings")
+    public ResponseEntity<List<Booking>> getUserBookings(@PathVariable int userId) {
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+
+        List<Booking> bookings = bookingRepository.findByUser(user);
+        return ResponseEntity.ok(bookings);
+    }
+
+    @DeleteMapping("/user/{userId}/bookings/{bookingId}")
+    public ResponseEntity<String> deleteBooking(
+            @PathVariable int userId,
+            @PathVariable int bookingId) {
+
+        User user = userRepository.findById(userId);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
+        if (booking == null || booking.getUser() == null || booking.getUser().getId() != user.getId()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Booking not found for this user");
+        }
+
+        bookingRepository.delete(booking);
+        return ResponseEntity.ok("Booking deleted successfully");
     }
 
 }
