@@ -12,20 +12,32 @@ function Account() {
     const [showAccountInfo, setShowAccountInfo] = useState(false);
     const [showEditOptions, setShowEditOptions] = useState(false);
 
-    //show travels stuff
-    const [travels, setTravels] = useState([]);
+    const [bookings, setBookings] = useState([]);
     const id = sessionStorage.getItem("id");
 
     useEffect(() => {
-        fetchUserTravels();
+        fetchUserBookings();
     }, []); 
 
-    const fetchUserTravels = async () => {
+    const fetchUserBookings = async () => {
         try {
-            const response = await axios.get(`http://localhost:8080/user/${id}/travels`);
-            setTravels(response.data); 
+            const response = await axios.get(`http://localhost:8080/user/${id}/bookings`);
+            setBookings(response.data); 
         } catch (error) {
-            console.error("Error fetching travels:", error);
+            console.error("Error fetching bookings:", error);
+        }
+    };
+
+    const handleDeleteBooking = async (bookingId) => {
+        try {
+            const userId = sessionStorage.getItem("id"); 
+            if (!userId) return;
+
+            await axios.delete(`http://localhost:8080/user/${userId}/bookings/${bookingId}`);
+            setBookings(bookings.filter((b) => b.id !== bookingId));
+
+        } catch (error) {
+            console.error("Error removing booking:", error);
         }
     };
 
@@ -37,75 +49,50 @@ function Account() {
         setInfoToUpdate(event.target.value);
     };
 
-    const handleDeleteTravel = async (travelId) => {
-        try {
-            const userId = sessionStorage.getItem("id"); 
-            if (!userId) {
-                console.error("No user ID found in sessionStorage");
-                return;
-            }
-    
-            await axios.delete(`http://localhost:8080/user/${userId}/travels/${travelId}`);
-    
-            setTravels(travels.filter((travel) => travel.id !== travelId));
-    
-            console.log("Travel removed successfully!");
-        } catch (error) {
-            console.error("Error removing travel:", error);
-        }
-    };
-
     const handleSubmit = () => {
         axios.patch('http://localhost:8080/updateUser', {
-            username: username,
-            password: password,
-            whatToUpdate: whatToUpdate,
-            infoToUpdate: infoToUpdate
+            username,
+            password,
+            whatToUpdate,
+            infoToUpdate
         }).then(response => {
-            console.log("Update successful:", response.data);
             switch(whatToUpdate) {
-                case "username":
-                  setUsername(infoToUpdate);
-                  break;
-                case "email":
-                  setEmail(infoToUpdate);
-                  break;
-                case "password":
-                  setPassword(infoToUpdate);
-                  break;
-              }
-        }).catch(error => {
-            console.error("There was an error updating the user:", error);
-        });
+                case "username": setUsername(infoToUpdate); break;
+                case "email": setEmail(infoToUpdate); break;
+                case "password": setPassword(infoToUpdate); break;
+                default: break;
+            }
+        }).catch(error => console.error("Error updating user:", error));
     };
 
     return (
         <div>
             <Navbar />
             <h1>Account</h1>
-            <h2>My Travels</h2>
-            {/* Display User's Travels */}
-                {travels.length > 0 ? (
-                    <div className="travel-container">
-                        {travels.map((travel) => (
-                            <div key={travel.id} className="travel-card">
-                                <h3>{travel.country}</h3>
-                                <h3>{travel.city}</h3>
-                                <h3>{travel.hotel}</h3>
-                                <p><strong>Date:</strong> {travel.date}</p>
-                                <button 
-                                className="delete-button" 
-                                onClick={() => handleDeleteTravel(travel.id)} >
-                                Delete Travel
-                            </button>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                        <p className="no-travels">No travels booked yet.</p>
-                )}    
 
-            {/* Checkbox to Show Account Info */}
+            {/* --- BOOKINGS --- */}
+            <h2>My Bookings</h2>
+            {bookings.length > 0 ? (
+                <div className="booking-container">
+                    {bookings.map((booking) => (
+                        <div key={booking.id} className="booking-card">
+                            <h3>Travel: {booking.travel.country} - {booking.travel.city} - {booking.travel.hotel}</h3>
+                            <p><strong>Arrival:</strong> {booking.arrivalDate}</p>
+                            <p><strong>Departure:</strong> {booking.departureDate}</p>
+                            <p><strong>Total Price:</strong> ${booking.totalPrice}</p>
+                            <button 
+                                className="delete-button" 
+                                onClick={() => handleDeleteBooking(booking.id)} >
+                                Delete Booking
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p className="no-bookings">No bookings yet.</p>
+            )}
+
+            {/* --- ACCOUNT INFO --- */}
             <div className="checkbox-container">
                 <label>
                     <input 
@@ -117,7 +104,6 @@ function Account() {
                 </label>
             </div>
 
-            {/* Show Account Info Only If Checkbox is Checked */}
             {showAccountInfo && (
                 <div className="account-box">
                     <h2>User Details</h2>
@@ -136,9 +122,6 @@ function Account() {
                         </div>
                     </div>
 
-                
-
-                    {/* Checkbox to Show Edit Account Options */}
                     <div className="checkbox-container">
                         <label>
                             <input 
@@ -150,7 +133,6 @@ function Account() {
                         </label>
                     </div>
 
-                    {/* Show Edit Options Only If Second Checkbox is Checked */}
                     {showEditOptions && (
                         <div className="account-actions">
                             <label htmlFor="change-select">Select an option to change:</label>
@@ -182,13 +164,13 @@ function Account() {
                 </div>
             )}
 
+            {/* --- ADMIN PAGE LINK --- */}
             <div className="admin-container">
                 <h2>Go to admin page if you are an admin</h2>
                 <div className='signout'>
                     <Link to='/admin'>Go to Admin Page</Link>
                 </div>
             </div>
-
         </div>
     );
 }

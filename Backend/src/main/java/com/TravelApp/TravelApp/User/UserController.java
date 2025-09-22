@@ -1,5 +1,7 @@
 package com.TravelApp.TravelApp.User;
 
+import com.TravelApp.TravelApp.Booking.Booking;
+import com.TravelApp.TravelApp.Booking.BookingRepository;
 import com.TravelApp.TravelApp.Functions;
 import com.TravelApp.TravelApp.JwtUtil;
 import com.TravelApp.TravelApp.Travel.Travel;
@@ -24,6 +26,9 @@ public class UserController {
     @Autowired
     private TravelRepository travelRepository;
 
+    @Autowired
+    BookingRepository bookingRepository;
+
     public UserController() {
     }
 
@@ -33,6 +38,10 @@ public class UserController {
 
     public UserController(TravelRepository travelRepository) {
         this.travelRepository = travelRepository;
+    }
+
+    public UserController(BookingRepository bookingRepository) {
+        this.bookingRepository = bookingRepository;
     }
 
     @GetMapping("/getAllUsers")
@@ -169,70 +178,41 @@ public class UserController {
         }
     }
 
-    @PostMapping("/addTravel/{userId}/{travelId}")
-    public ResponseEntity<String> addTravel(@PathVariable int userId, @PathVariable int travelId) {
-
+/*
+    @GetMapping("/user/{userId}/bookings")
+    public ResponseEntity<?> getUserBookings(@PathVariable int userId) {
         User user = userRepository.findById(userId);
+
         if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
-        }
-
-        Travel travel = travelRepository.findById(travelId);
-        if (travel == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Travel not found");
-        }
-
-        if (user.getTravels() == null) {
-            user.setTravels(new ArrayList<>());
-        }
-
-        if (user.getTravels().contains(travel)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Travel already added to user's list");
-        }
-
-        user.getTravels().add(travel);
-        userRepository.save(user);
-
-        return ResponseEntity.ok("Travel added successfully to user!");
-    }
-
-    @GetMapping("/user/{userId}/travels")
-    public ResponseEntity<?> getUserTravels(@PathVariable int userId) {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findById(userId));
-
-        if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
         }
 
-        User user = userOptional.get();
-        return ResponseEntity.ok(user.getTravels());
+        return ResponseEntity.ok(user.getBookings());
     }
 
-    @DeleteMapping("/user/{userId}/travels/{travelId}")
-    public ResponseEntity<String> removeTravelFromUser(
-            @PathVariable Integer userId,
-            @PathVariable Integer travelId) {
 
-        Optional<User> userOptional = userRepository.findById(userId);
-        Optional<Travel> travelOptional = travelRepository.findById(travelId);
+    @DeleteMapping("/user/{userId}/bookings/{bookingId}")
+    public ResponseEntity<String> removeBooking(@PathVariable int userId, @PathVariable int bookingId) {
+        User user = userRepository.findById(userId);
+        Booking booking = bookingRepository.findById(bookingId).orElse(null);
 
-        if (userOptional.isEmpty() || travelOptional.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or Travel not found!");
-        }
+        if (user == null || booking == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or Booking not found!");
 
-        User user = userOptional.get();
-        Travel travel = travelOptional.get();
+        if (!user.getBookings().contains(booking))
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Booking not found in user's list!");
 
-        if (!user.getTravels().contains(travel)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Travel not found in user's list!");
-        }
-
-        user.getTravels().remove(travel);
+        user.getBookings().remove(booking);
         userRepository.save(user);
-        travel.setNumberOfRemainingSpots(travel.getNumberOfRemainingSpots() + 1);
+
+        // Free travel spots
+        Travel travel = booking.getTravel();
+        travel.setNumberOfRemainingSpots(travel.getNumberOfRemainingSpots() + booking.getNumberOfPersons());
         travelRepository.save(travel);
 
-        return ResponseEntity.ok("Travel removed successfully!");
-    }
+        bookingRepository.delete(booking);
 
+        return ResponseEntity.ok("Booking removed successfully!");
+    }
+    */
 }

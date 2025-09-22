@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import '../Styles/SignUp.css'
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function SignUp(){
   const [username, setUsername] = useState('');
@@ -56,6 +57,7 @@ function SignUp(){
               />
             </div>
             <button type="submit">Sign Up</button>
+            <Link to="/signin">You already have an account? Go to sign in by clicking on this text!</Link>
           </form>
       </div>
     </div>

@@ -8,15 +8,19 @@ import java.util.List;
 
 public interface TravelRepository extends JpaRepository<Travel, Integer> {
 
-    //public Travel findByCountry(String country);
-    public Travel findByCountryAndCityAndHotelAndDate(String country, String city, String hotel, LocalDate date);
+    public Travel findByCountryAndCityAndHotel(
+            String country, String city, String hotel
+    );
+
     public Travel findById(int id);
+
     public List<Travel> findByCountry(String country);
 
     @Override
     <S extends Travel> S save(S s);
 
     @Transactional
-    void deleteByCountryAndCityAndHotelAndDate(String country, String city, String hotel, LocalDate date);
-
+    void deleteByCountryAndCityAndHotel(
+            String country, String city, String hotel
+    );
 }

@@ -1,7 +1,6 @@
 package com.TravelApp.TravelApp.Travel;
 
 import com.TravelApp.TravelApp.User.UserRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,42 +39,26 @@ public class TravelController {
         }
     }
 
-/*
-    @PostMapping("/checkTravel")
-    public ResponseEntity<String> checkTravel(@RequestBody Travel travel) {
-        String country = travel.getCountry();
-
-        System.out.println("Received country: " + country);
-
-        Travel existingTravel = travelRepository.findByCountry(country);
-
-        if (existingTravel != null) {
-            // If user exists, send a success response to the React app
-            return ResponseEntity.ok("Travel exists!");
-        } else {
-            // If user doesn't exist, send a not found response to the React app
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Travel not found!");
-        }
-    } */
-
     @PostMapping("/createTravel")
     public ResponseEntity<String> createTravel(@RequestBody Travel travel) {
 
         String country = travel.getCountry();
         String city = travel.getCity();
         String hotel = travel.getHotel();
-        LocalDate date = travel.getDate();
-        int price = travel.getPrice();
-        int numberOfRemainingSpots = travel.getNumberOfRemainingSpots();
 
-        Travel existingTravel = travelRepository.findByCountryAndCityAndHotelAndDate(country, city, hotel, date);
+        Travel existingTravel = travelRepository.findByCountryAndCityAndHotel(
+                country, city, hotel);
 
         if (existingTravel != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Travel already exists!");
-        } else {
-            travelRepository.save(travel);
-            return ResponseEntity.ok("Travel created!");
         }
+
+        // save travel first
+        Travel savedTravel = travelRepository.save(travel);
+
+        travelRepository.save(savedTravel); // cascade saves TravelDays too
+
+        return ResponseEntity.ok("Travel created with days!");
     }
 
     @PatchMapping("/updateTravel")
@@ -84,14 +67,13 @@ public class TravelController {
         String country = updateData.get("country");
         String city = updateData.get("city");
         String hotel = updateData.get("hotel");
-        String dateString = updateData.get("date");
+
         String whatToUpdate = updateData.get("whatToUpdate");
         String infoToUpdate = updateData.get("infoToUpdate");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Adjust if needed
-        LocalDate date = LocalDate.parse(dateString, formatter);
 
-        Travel existingTravel = travelRepository.findByCountryAndCityAndHotelAndDate(country, city, hotel, date);
+        Travel existingTravel = travelRepository.findByCountryAndCityAndHotel(
+                country, city, hotel);
 
         if (existingTravel != null) {
             switch (whatToUpdate) {
@@ -104,18 +86,16 @@ public class TravelController {
                 case "hotel":
                     existingTravel.setHotel(infoToUpdate);
                     break;
-                case "date":
-                    existingTravel.setDate(date);
-                    break;
-                case "price":
-                    int integer = Integer.parseInt(infoToUpdate);
-                    existingTravel.setPrice(integer);
+                case "pricePerPerson":
+                    int price = Integer.parseInt(infoToUpdate);
+                    existingTravel.setPricePerPerson(price);
                     break;
                 case "numberOfRemainingSpots":
-                    int integer2 = Integer.parseInt(infoToUpdate);
-                    existingTravel.setPrice(integer2);
+                    int spots = Integer.parseInt(infoToUpdate);
+                    existingTravel.setNumberOfRemainingSpots(spots);
                     break;
-                default: break;
+                default:
+                    break;
             }
             travelRepository.save(existingTravel);
             return ResponseEntity.ok("Travel updated!");
@@ -130,10 +110,13 @@ public class TravelController {
         String country = deleteData.get("country");
         String city = deleteData.get("city");
         String hotel = deleteData.get("hotel");
-        String dateString = deleteData.get("date");
+        String arrivalDateString = deleteData.get("arrivalDate");
+        String departureDateString = deleteData.get("departureDate");
 
         try {
-            travelRepository.deleteByCountryAndCityAndHotelAndDate(country, city, hotel, LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            travelRepository.deleteByCountryAndCityAndHotel(
+                    country, city, hotel);
             return ResponseEntity.ok("Travel deleted");
         } catch (Exception e) {
             e.printStackTrace();
