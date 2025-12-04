@@ -8,12 +8,15 @@ function Navbar(props) {
 
     return (    
         <div className='navbar'>
+            <div className='img'>
+                 <img src="/Images/TravelApp.png" alt="Travel App" className="navbarlogo" />
+            </div>
             <div className='home'>
                 <Link to="/home">Home</Link>
             </div>
             <div className='travel'>
                 <Link to="/travel">Travel</Link>
-        </div>
+            </div>
             <div className='account'>
                 <Link to="/account">Account</Link>
             </div>

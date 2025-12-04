@@ -27,6 +27,7 @@ function SignUp(){
   return (
     <div>
       <div className='signup-container'>
+      <img src="/Images/TravelApp.png" alt="Travel App" className="logo" />
       <h2>Sign Up</h2>
           <form onSubmit={handleSubmit}>
             <div>

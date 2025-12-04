@@ -149,10 +149,6 @@ function Travel() {
                     </div>
                 </div>    
                     
-                <div className="calendar-wrapper">
-                    <Calendar onChange={calendarValueOnChange} value={calendarValue} />
-                </div>
-
                 {travels.length > 0 ? (
                     <div className="cities">
                         <label>Select which city would you like to visit</label>
