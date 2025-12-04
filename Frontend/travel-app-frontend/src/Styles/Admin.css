@@ -24,6 +24,14 @@
     gap: 15px; 
 }
 
+.admin-booking-container {
+    display: flex;
+    justify-content:center;
+    margin-right: 40px;
+    padding: 20px;
+    gap: 15px;
+}
+
 .admin-button {
     padding: 10px 20px;
     font-size: 18px;
@@ -116,7 +124,8 @@ button:hover {
 
 .user-item .user-id,
 .user-item .user-username,
-.user-item .user-email {
+.user-item .user-email,
+.user-item .user-password {
     margin: 8px 0;
     font-weight: bold;
 }

@@ -75,6 +75,7 @@ function SignIn() {
   return (
     <div>
       <div className='signin-container'>
+          <img src="/Images/TravelApp.png" alt="Travel App" className="logo" />
           <h2>Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div>

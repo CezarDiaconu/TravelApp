@@ -29,16 +29,29 @@ function Account() {
     };
 
     const handleDeleteBooking = async (bookingId) => {
-        try {
-            const userId = sessionStorage.getItem("id"); 
-            if (!userId) return;
+        
+        // 1. Show the confirmation box
+        const isConfirmed = window.confirm("Are you sure you want to delete this booking?");
 
-            await axios.delete(`http://localhost:8080/user/${userId}/bookings/${bookingId}`);
-            setBookings(bookings.filter((b) => b.id !== bookingId));
+        // 2. Only proceed if the user clicked OK (isConfirmed is true)
+        if (isConfirmed) {
+            try {
+                const userId = sessionStorage.getItem("id"); 
+                if (!userId) return;
 
-        } catch (error) {
-            console.error("Error removing booking:", error);
+                // Existing deletion logic
+                await axios.delete(`http://localhost:8080/user/${userId}/bookings/${bookingId}`);
+                
+                // Update the state to remove the booking from the UI
+                setBookings(bookings.filter((b) => b.id !== bookingId));
+                
+            } catch (error) {
+                console.error("Error removing booking:", error);
+                // Optionally, alert the user of the failure
+                alert("Failed to delete booking. Please try again.");
+            }
         }
+        // If the user clicks 'Cancel', the function simply returns, and nothing happens.
     };
 
     const handleChangeSelection = (event) => {
@@ -120,6 +133,10 @@ function Account() {
                             <label>Password:</label>
                             <span>{password}</span>
                         </div>
+                        <div className="info-item">
+                            <label>Account status:</label>
+                            <span>User</span>
+                        </div>
                     </div>
 
                     <div className="checkbox-container">
@@ -166,7 +183,6 @@ function Account() {
 
             {/* --- ADMIN PAGE LINK --- */}
             <div className="admin-container">
-                <h2>Go to admin page if you are an admin</h2>
                 <div className='signout'>
                     <Link to='/admin'>Go to Admin Page</Link>
                 </div>

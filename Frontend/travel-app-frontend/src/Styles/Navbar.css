@@ -1,5 +1,6 @@
 .navbar {
   display: flex;
+  height: 75px;
   justify-content: center; /* Keeps it centered */
   align-items: center;
   position: fixed; /* Makes it stick to the top */
@@ -16,7 +17,7 @@
 }
 
 .navbar a {
-  color: white;
+  color: white !important;
   text-decoration: none;
   font-size: 18px;
   transition: color 0.3s ease;
@@ -26,7 +27,7 @@
   color: #00aaff; /* Light blue hover color */
 }
 
-.home, .travel, .account {
+.home, .travel, .account .signout{
   padding: 8px 16px;
 }
 
@@ -38,4 +39,14 @@
 /* Add margin to the body or content so it doesn't get hidden under the navbar */
 body {
   padding-top: 60px; /* Adjust this value to match the navbar's height */
+}
+
+.navbarlogo {
+    width: 100px !important; 
+    height: 100px !important; 
+    object-fit: contain; 
+    position: absolute; 
+    left: 50px; 
+    top: 50%;
+    transform: translateY(-50%); 
 }

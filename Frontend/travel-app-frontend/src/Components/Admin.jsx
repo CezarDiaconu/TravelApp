@@ -9,6 +9,7 @@ function Admin() {
 
     const [users, setUsers] = useState([]);
     const [travels, setTravels] = useState([]);
+    const [bookings, setBookings] = useState([]);
 
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
@@ -161,6 +162,15 @@ function Admin() {
         }
     }
 
+    const getAllBookings = async () => {
+        try {
+            const response15 = await axios.get('http://localhost:8080/getAllBookings');
+            setBookings(response15.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }    
+
     return (
         <div>
             <Navbar/>
@@ -205,7 +215,29 @@ function Admin() {
                         }}>
                         Find All Travels
                     </button>
-                </div>      
+                </div>
+
+                <div className="admin-booking-container">
+                        <button className="admin-button" onClick={() => setActiveForm("11")}>
+                            Search Booking
+                        </button>
+                        <button className="admin-button" onClick={() => setActiveForm("12")}>
+                            Update Booking
+                        </button>
+                        <button className="admin-button" onClick={() => setActiveForm("13")}>
+                            Create Booking
+                        </button>
+                        <button className="admin-button" onClick={() => setActiveForm("14")}>
+                            Delete Booking
+                        </button>
+                        <button className="admin-button" onClick={() => {
+                            getAllBookings();
+                            setActiveForm("15")
+                            }}>
+                            Find All Bookings
+                        </button>
+                </div>
+
             </div>
 
             {activeForm === "2" && (
@@ -311,15 +343,7 @@ function Admin() {
                             <div className="user-id">ID: {user.id}</div>
                             <div className="user-username">Username: {user.username}</div>
                             <div className="user-email">Email: {user.email}</div>
-                            <div className="user-password">Password: {user.password}</div>
-                            <div className="user-travels">
-                                <h4>Travels:</h4>
-                                <ul>
-                                    {user.travels.map(travel => (
-                                        <li key={travel.id}>{travel.name}</li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <div className="user-password">Password: ***************** </div>
                         </div>
                     ))}
                 </div>
@@ -483,7 +507,7 @@ function Admin() {
                             <button type="submit">Delete Travel</button>
                         </form>
                     </div>
-            </div>
+                </div>
             )}
 
             {activeForm === "10" && (
@@ -501,6 +525,22 @@ function Admin() {
 
                 </div>    
             )}
+
+            {activeForm === "15" && (
+                <div className="user-list">
+                    {bookings.map(booking => (
+                        <div key={booking.id} className="user-item">
+                            <div className="user-id">ID: {booking.id}</div>
+                            <div className="user-username">Arrival: {booking.arrivalDate}</div>
+                            <div className="user-email">Departure: {booking.departureDate}</div>
+                            <div className="user-email">Persons: {booking.numberOfPersons}</div>
+                            <div className="user-email">Total Price: {booking.totalPrice}</div>
+                            <div className="user-email">User ID: {booking.user?.id}</div>
+                            <div className="user-email">Travel ID: {booking.travel?.id}</div>
+                        </div>
+                    ))}
+                </div>
+)}
 
         </div>
     )

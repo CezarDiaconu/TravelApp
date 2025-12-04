@@ -28,6 +28,9 @@ public class BookingController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping("/getAllBookings")
+    public List<Booking> findAllBookings() {return bookingRepository.findAll();}
+
     @PostMapping("/createBooking")
     public ResponseEntity<String> createBooking(@RequestBody Booking bookingRequest) {
 
