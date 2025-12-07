@@ -145,3 +145,52 @@ button:hover {
 }
 
 /* User List */
+
+
+/* === MEDIA QUERY FOR LAPTOPS & SMALLER SCREENS === */
+@media screen and (max-width: 1600px) {
+
+    /* 1. Fix the main container spacing */
+    .admin-container {
+        /* Reduce the huge 100px top margin to save space */
+        margin-top: 200px; 
+        
+        /* Allow items to drop to the next line if they don't fit horizontally */
+        flex-wrap: wrap; 
+        
+        /* Center everything nicely if they do wrap */
+        justify-content: center; 
+    }
+
+    /* 2. Fix the spacing between button groups */
+    .admin-user-container,
+    .admin-travel-container,
+    .admin-booking-container {
+        /* Reduce the right margin so they aren't pushed off screen */
+        margin-right: 10px; 
+        
+        /* Make the container smaller */
+        padding: 10px; 
+    }
+
+    /* 3. Fix the Form vertical position */
+    .form-container {
+        /* Reduce the huge 200px top margin */
+        margin-top: 50px; 
+    }
+}
+
+/* === MEDIA QUERY FOR MOBILE PHONES === */
+@media screen and (max-width: 600px) {
+    
+    /* Stack everything in a column on phones */
+    .admin-container {
+        flex-direction: column;
+    }
+
+    /* Make buttons span the full width for easy tapping */
+    .admin-button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
