@@ -163,6 +163,7 @@ function Travel() {
                                 <option value="Germany">Germany</option>
                                 <option value="Poland">Poland</option>
                                 <option value="France">France</option>
+                                <option value="France">Sweden</option>
                             </select>
                             <button type="submit">Search</button>
                         </form>
