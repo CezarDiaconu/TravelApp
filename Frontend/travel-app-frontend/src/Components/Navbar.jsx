@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../Styles/Navbar.css';
+import { Context } from '../App';
 
 function Navbar(props) {
 
-    
+    const {token} = useContext(Context);
+
+    const handleSignOut = () => {
+        sessionStorage.clear(); 
+    };
 
     return (    
         <div className='navbar'>
@@ -20,9 +25,16 @@ function Navbar(props) {
             <div className='account'>
                 <Link to="/account">Account</Link>
             </div>
-            <div className='signout'>
+            {token === ""  && (
+            <div className='signin'>
                 <Link to='/signin'>Sign In</Link>
             </div>
+            )}
+            {token != "" && (
+            <div className='signout'>
+                <Link to='/signin' onClick={handleSignOut} >Sign Out</Link>
+            </div>
+            )}
         </div>
 )
 }

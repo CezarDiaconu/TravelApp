@@ -10,19 +10,33 @@ function SignUp(){
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = axios.post('http://localhost:8080/createUser', {
-        username: username,
-        email: email,
-        password: password,
-      });
+        // Attempt to create user
+        const response = await axios.post("http://localhost:8080/createUser", {
+            username: username,
+            email: email,
+            password: password
+        });
+
+       
+        console.log("Success:", response.data);
+        alert(response.data); 
+
     } catch (error) {
-      console.log("error: " + error.message)
+        if (error.response) {
+            
+            console.log("Error Status:", error.response.status); 
+            console.log("Error Message:", error.response.data); 
+            
+            alert(error.response.data); 
+        } else {
+            console.log("Error:", error.message);
+        }
     }
-    navigate("/signin");
-  };
+};
 
   return (
     <div>

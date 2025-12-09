@@ -100,6 +100,57 @@ h2 {
 }
 /* Popular Destinations */
 
+/* Policies */
+
+.policies-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 20px auto;
+    flex-wrap: wrap;
+    max-width: 800px;
+}
+
+.policy-card {
+    background: #fff;
+    width: 300px;
+    padding: 20px;
+    border-radius: 8px;
+    /* This adds a nice blue line at the top to highlight importance */
+    border-top: 5px solid #007BFF; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: left; /* Text on left looks better for lists/info */
+    transition: transform 0.2s;
+}
+
+.policy-card:hover {
+    transform: translateY(-5px); /* Moves up slightly when hovered */
+}
+
+.policy-card h3 {
+    margin-top: 0;
+    color: #333;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.policy-card p {
+    color: #555;
+    line-height: 1.6; /* Makes text easier to read */
+    font-size: 15px;
+}
+
+.policy-card strong {
+    color: #007BFF; /* Highlights the times/key words in blue */
+}
+
+.home-container {
+    padding-bottom: 100px; /* Added extra padding at bottom */
+}
+
+/* Policies */ 
+
 /* Qualities */
 
 .qualities, .social-media {

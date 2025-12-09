@@ -69,6 +69,22 @@ function Home() {
         </div>
       </div>
       
+      <h2>Good to Know</h2>
+      <section className="policies-container">
+        <div className="policy-card">
+            {/* You can add an image here later if you want, e.g., <img src="/Images/calendar.png" /> */}
+            <h3>Cancellation Policy</h3>
+            <p>We value flexibility. Most stays offer <strong>Free cancellation</strong> up to 24h before arrival. Non-refundable options are clearly marked.</p>
+        </div>
+        <div className="policy-card">
+            {/* You can add an image here later if you want, e.g., <img src="/Images/clock.png" /> */}
+            <h3>Check-in & Check-out</h3>
+            <p>Plan your arrival smoothly:<br />
+            <strong>Check-in:</strong> After 14:00<br />
+            <strong>Check-out:</strong> Before 12:00</p>
+        </div>
+      </section>
+
       <h2>Why should you choose us?</h2>
 
       <section className="qualities">

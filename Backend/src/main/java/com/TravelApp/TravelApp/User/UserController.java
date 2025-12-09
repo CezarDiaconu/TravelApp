@@ -73,6 +73,19 @@ public class UserController {
         return ResponseEntity.ok(token);
     }
 
+    @PostMapping("/getRole")
+    public ResponseEntity<String> getRole(@RequestBody Map<String, String> userData) {
+        String username = userData.get("username");
+
+        User user = userRepository.findByUsername(username);
+
+        if (user != null) {
+            return ResponseEntity.ok(user.getRole());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
+        }
+    }
+
 
     @PostMapping("/sendEmail")
     public String sendEmail(@RequestBody Map<String, String> userData) {
@@ -143,7 +156,7 @@ public class UserController {
 
         User user = userRepository.findByUsernameAndPassword(userUsername, userPassword);
 
-        if( user != null) {
+        if (user != null) {
             switch (whatToUpdate) {
                 case "username":
                     user.setUsername(infoToUpdate);
@@ -152,12 +165,16 @@ public class UserController {
                     user.setEmail(infoToUpdate);
                     break;
                 case "password":
-                    user.setPassword(infoToUpdate);
-                    break;
+                    if (Functions.isValidPassword(infoToUpdate)) {
+                        user.setPassword(infoToUpdate);
+                        break;
+                    } else {
+                        return ResponseEntity.badRequest().build();
+                    }
                 default: break;
-            }
-            userRepository.save(user);
-            return ResponseEntity.ok(user);
+                }
+                userRepository.save(user);
+                return ResponseEntity.ok(user);
         }
         else {
             return ResponseEntity.notFound().build();
@@ -178,41 +195,5 @@ public class UserController {
         }
     }
 
-/*
-    @GetMapping("/user/{userId}/bookings")
-    public ResponseEntity<?> getUserBookings(@PathVariable int userId) {
-        User user = userRepository.findById(userId);
 
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found!");
-        }
-
-        return ResponseEntity.ok(user.getBookings());
-    }
-
-
-    @DeleteMapping("/user/{userId}/bookings/{bookingId}")
-    public ResponseEntity<String> removeBooking(@PathVariable int userId, @PathVariable int bookingId) {
-        User user = userRepository.findById(userId);
-        Booking booking = bookingRepository.findById(bookingId).orElse(null);
-
-        if (user == null || booking == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User or Booking not found!");
-
-        if (!user.getBookings().contains(booking))
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Booking not found in user's list!");
-
-        user.getBookings().remove(booking);
-        userRepository.save(user);
-
-        // Free travel spots
-        Travel travel = booking.getTravel();
-        travel.setNumberOfRemainingSpots(travel.getNumberOfRemainingSpots() + booking.getNumberOfPersons());
-        travelRepository.save(travel);
-
-        bookingRepository.delete(booking);
-
-        return ResponseEntity.ok("Booking removed successfully!");
-    }
-    */
 }

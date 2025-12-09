@@ -6,11 +6,12 @@ import { Context } from '../App';
 import '../Styles/Account.css'; 
 
 function Account() {
-    const { username, email, password, setUsername, setEmail, setPassword } = useContext(Context); 
+    const { username, email, password, role, setUsername, setEmail, setPassword } = useContext(Context); 
     const [whatToUpdate, setWhatToUpdate] = useState("");
     const [infoToUpdate, setInfoToUpdate] = useState("");
     const [showAccountInfo, setShowAccountInfo] = useState(false);
     const [showEditOptions, setShowEditOptions] = useState(false);
+    const [showActualPassword, setShowActualPassword] = useState(false);
 
     const [bookings, setBookings] = useState([]);
     const id = sessionStorage.getItem("id");
@@ -63,19 +64,35 @@ function Account() {
     };
 
     const handleSubmit = () => {
-        axios.patch('http://localhost:8080/updateUser', {
-            username,
-            password,
-            whatToUpdate,
-            infoToUpdate
-        }).then(response => {
-            switch(whatToUpdate) {
-                case "username": setUsername(infoToUpdate); break;
-                case "email": setEmail(infoToUpdate); break;
-                case "password": setPassword(infoToUpdate); break;
-                default: break;
-            }
-        }).catch(error => console.error("Error updating user:", error));
+        if (!infoToUpdate) {
+            alert("Please enter the new information first.");
+            return;
+        }
+
+        const message = `Are you sure you want to change your ${whatToUpdate} to: "${infoToUpdate}"?`;
+
+        const isConfirmed = window.confirm(message);
+
+        if (isConfirmed) {
+            axios.patch('http://localhost:8080/updateUser', {
+                username,
+                password,
+                whatToUpdate,
+                infoToUpdate
+            }).then(response => {
+                switch(whatToUpdate) {
+                    case "username": setUsername(infoToUpdate); break;
+                    case "email": setEmail(infoToUpdate); break;
+                    case "password": setPassword(infoToUpdate); break;
+                    default: break;
+                }
+                alert("Update successful!");
+                setInfoToUpdate(""); 
+            }).catch(error => {
+                console.error("Error updating user:", error);
+                alert("An error occurred while updating. Please try again.");
+            });
+        }
     };
 
     return (
@@ -131,7 +148,17 @@ function Account() {
                         </div>
                         <div className="info-item">
                             <label>Password:</label>
-                            <span>{password}</span>
+                            <span>{showActualPassword ? password : "****"}</span>
+                        </div>
+                        <div className="password-reveal-wrapper">
+                            <label>
+                                <input 
+                                    type="checkbox" 
+                                    checked={showActualPassword} 
+                                    onChange={() => setShowActualPassword(!showActualPassword)} 
+                                />
+                                Show Password
+                            </label>
                         </div>
                         <div className="info-item">
                             <label>Account status:</label>
@@ -181,12 +208,13 @@ function Account() {
                 </div>
             )}
 
-            {/* --- ADMIN PAGE LINK --- */}
-            <div className="admin-container">
-                <div className='signout'>
-                    <Link to='/admin'>Go to Admin Page</Link>
+            {role === "admin" && (
+                <div className="admin-container">
+                    <div className='signout'>
+                        <Link to='/admin'>Go to Admin Page</Link>
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 }

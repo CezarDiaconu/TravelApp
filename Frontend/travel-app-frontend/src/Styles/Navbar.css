@@ -27,7 +27,7 @@
   color: #00aaff; /* Light blue hover color */
 }
 
-.home, .travel, .account .signout{
+.home, .travel, .account, .signin, .signout{
   padding: 8px 16px;
 }
 

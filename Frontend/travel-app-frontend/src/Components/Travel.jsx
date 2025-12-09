@@ -190,18 +190,61 @@ function Travel() {
                 )}
 
                 <div className="filters-container">        
-                   {/* ... keeping your existing price filters ... */}
                     <label>Select which price range you wish</label>
                     <label>
                         <input 
                             type="checkbox"
-                            value="200-400"
+                            value="25-50"
                             onChange={handlePriceRange}
-                            checked={priceRange.min === 200 && priceRange.max === 400}
+                            checked={priceRange.min === 25 && priceRange.max === 50}
                         />
-                        200-400$
+                        25-50
                     </label>
-                    {/* ... other price filters ... */}
+                    <label>
+                        <input 
+                            type="checkbox"
+                            value="50-100"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 50 && priceRange.max === 100}
+                        />
+                        50-100
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox"
+                            value="100-150"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 100 && priceRange.max === 150}
+                        />
+                        100-150
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox"
+                            value="150-200"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 150 && priceRange.max === 200}
+                        />
+                        150-200
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox"
+                            value="200-250"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 200 && priceRange.max === 250}
+                        />
+                        200-250
+                    </label>
+                    <label>
+                        <input 
+                            type="checkbox"
+                            value="250-300"
+                            onChange={handlePriceRange}
+                            checked={priceRange.min === 250 && priceRange.max === 300}
+                        />
+                        250-300
+                    </label>
                     <div className="sorting">
                         <label>Sort by price:</label>
                         <select value={sortOrder} onChange={(e) => handleSort(e.target.value)}>

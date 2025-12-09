@@ -26,6 +26,7 @@ function App() {
   const [password, setPassword] = useState(sessionStorage.getItem("password") || "");
   const [id, setId] = useState(sessionStorage.getItem("id") || "");
   const [token, setToken] = useState(sessionStorage.getItem("token") || "");
+  const [role, setRole] = useState(sessionStorage.getItem("role" || ""));
 
   useEffect(() => {
     sessionStorage.setItem("username", username);
@@ -33,20 +34,18 @@ function App() {
     sessionStorage.setItem("password", password);
     sessionStorage.setItem("id", id);
     sessionStorage.setItem("token", token);
-  }, [username, email, password, id, token]);
+    sessionStorage.setItem("role", role);
+  }, [username, email, password, id, token, role]);
 
   return (
-    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId, token, setToken }}>
+    <Context.Provider value={{ username, setUsername, email, setEmail, password, setPassword, id, setId, token, setToken, role, setRole }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
-          
-          {/* Protect the Travel route */}
-          <Route path="/travel" element={<ProtectedRoute token={token}><Travel /></ProtectedRoute>} />
-          
+          <Route path="/travel" element={<ProtectedRoute token={token}><Travel /></ProtectedRoute>} />         
           <Route path="/account" element={<ProtectedRoute token={token}><Account /></ProtectedRoute>} />
           <Route path="/admin"  element={<ProtectedRoute token={token}><Admin /> </ProtectedRoute>} />
           <Route path="*" element={<Error />} />

@@ -10,7 +10,7 @@ function SignIn() {
   const [localUsername, setLocalUsername] = useState('');
   const [localPassword, setLocalPassword] = useState('');
   const navigate = useNavigate();
-  const { setUsername, setEmail, setPassword, setId, setToken } = useContext(Context);
+  const { setUsername, setEmail, setPassword, setId, setToken, setRole } = useContext(Context);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,6 +60,15 @@ function SignIn() {
           console.error('Axios error:', error.message);
         }
 
+        try {
+          const response4 = await axios.post('http://localhost:8080/getRole', {
+            username : localUsername
+          });
+          setRole(response4.data);
+        } catch (error) {
+          console.error('Axios error: ' + error.message);
+        }
+
         // Redirect to home page after successful sign-in
         navigate("/home");
       } else {
@@ -69,6 +78,7 @@ function SignIn() {
       console.log('Response data:', response.data);
     } catch (error) {
       console.error('Axios error:', error.message);
+      alert(error.response.data);
     }
   };
 

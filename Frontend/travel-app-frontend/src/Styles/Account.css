@@ -48,6 +48,13 @@
     background-color: #0056b3;
 }
 
+.no-bookings {
+    text-align: center;
+    font-size: 18px;    /* Optional: makes it slightly larger */
+    color: #666;        /* Optional: makes it grey/subtle */
+    margin-top: 20px;   /* Optional: gives it some breathing room from the header */
+}
+
 /* Travels related css*/
 
 body {
@@ -111,8 +118,31 @@ label {
     background-color: #0056b3;
 }
 
+.password-reveal-wrapper {
+    display: flex;
+    justify-content: flex-end; /* Pushes content to the right side */
+    align-items: center;
+    margin-top: -8px; /* Pulls it up closer to the password line */
+    margin-bottom: 15px; /* Adds space before the next item */
+}
 
-/* Add this to your existing Account.css */
+/* Specific label styling for this checkbox (overrides global bold labels) */
+.password-reveal-wrapper label {
+    font-size: 13px;       /* Smaller text */
+    font-weight: normal;   /* Not bold */
+    color: #666;           /* Grey color to look secondary */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.password-reveal-wrapper input {
+    cursor: pointer;
+    transform: scale(1); 
+    margin: 0;
+}
+
 .account-actions select {
     padding: 10px;
     margin: 10px 0;

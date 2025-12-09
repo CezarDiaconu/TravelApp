@@ -15,6 +15,7 @@ public class User {
     private String username;
     private String email;
     private String password;
+    private String role = "user";
 
     @ManyToMany
     @JoinTable(
@@ -32,6 +33,7 @@ public class User {
         this.username = name;
         this.email = email;
         this.password = password;
+        this.role = "user";
     }
 
     public int getId() {
@@ -64,6 +66,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public List<Booking> getBookings() {
